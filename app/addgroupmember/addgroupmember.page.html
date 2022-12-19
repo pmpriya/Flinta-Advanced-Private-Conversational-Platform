@@ -1,0 +1,56 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>Add Members</ion-title>
+    <button *ngIf="contactsSelected!=undefined && contactsSelected.length!=0" ion-button clear icon-only item-right
+      style="float: right;margin-right: 10px;" (click)="creategroup()">
+      <ion-icon name="send" class="ionicon" float-right></ion-icon>
+    </button>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <span style="float: left;
+    margin-top: 7px;color:#fff;"> Add Members </span>
+
+    <!-- <img 
+      height="30" src="assets/addicon.png"  (click)="creategroup()" /> -->
+    <button ion-button clear icon-only item-right style="font-size: 25px;background: transparent; float: right;margin-right: 10px;float: right;margin-right: 10px;"
+    *ngIf="contactsSelected.length!=0" (click)="creategroup()">
+    <ion-icon name="add-circle" title="Create" style="position: relative;top:3px;left:-50px" class="ionicon"></ion-icon>
+  </button>
+  <ion-icon name="close-circle"  class="removeicon"
+  style="margin-top: -19px;" title="Close" (click)="closepoup()"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar [(ngModel)]="searchstring" style="border:1px solid black;border-radius:20px;height: 41px;margin-top: 5px;" (input)="searchuser($event)" placeholder="Search">
+  </ion-searchbar>
+
+  <ion-list no-lines>
+    <ion-list>
+      <ion-item *ngFor="let item of contactList" style="border-bottom: 1px solid lightgrey;">
+        <ion-avatar item-left>
+
+          <img *ngIf="item.photourl=='default'" src="assets/imgs/chatterplace.png">
+          <img *ngIf="item.photourl!='default'" src={{item.photourl}}>
+
+        </ion-avatar>
+
+        <ion-label [ngStyle]="{'color': colorCode}">&nbsp;{{item.username}}</ion-label>
+        <ion-checkbox color="dark" id={{item.uid}} (ionChange)="change(item)" value="false" [(ngModel)]="item.selected" item-right
+          checked="{{item.selected}}"></ion-checkbox>
+      </ion-item>
+      <!-- <button ion-button color="primary" (click)="addbuddy(key)">
+            <ion-icon name="person-add"></ion-icon>
+            Add
+          </button> -->
+    </ion-list>
+
+  </ion-list>
+
+</ion-content>
