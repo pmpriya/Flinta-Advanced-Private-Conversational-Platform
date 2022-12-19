@@ -1,0 +1,13 @@
+.profileimage{
+        
+    overflow: hidden;
+
+    height: 400px;
+    position: relative;
+    -o-object-fit: cover;
+    object-fit: cover;
+    width: 95%;
+}
+.hydrated{
+    --offset-bottom: 0px !important;
+}

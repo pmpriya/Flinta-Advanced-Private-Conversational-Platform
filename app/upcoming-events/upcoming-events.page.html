@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Birthdays</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <p style="text-align: center;margin:10px 0;" *ngIf="showloading">Please Wait..</p>
+<!-- 
+  <ion-list>
+    <div *ngFor="let buddy of mycontacts;let i = index;">
+    <ion-item *ngIf="buddy.mobile != me && buddy.userstatus=='A'"  (click)="sendwishes(buddy)">
+     
+      <ion-label>
+        <h2>{{buddy.username}}</h2>
+        <p *ngIf="buddy.advbday!=true&&buddy.belatedbday!=true">{{buddy.dob | date: "dd-MM-yyyy"}}</p>
+        <p *ngIf="buddy.advbday==true" style="color: limegreen;font-weight: bold;">{{buddy.dob | date: "dd-MM-yyyy"}}</p>
+        <p *ngIf="buddy.belatedbday==true" style="color: orangered;font-weight: bold;">{{buddy.dob | date: "dd-MM-yyyy"}}</p>
+
+      </ion-label>
+     
+    </ion-item>
+  </div>
+
+</ion-list> -->
+
+<ion-list style="margin-top: 10px;" >
+  <ion-searchbar  (input)="searchuser($event)" placeholder="Search" (ionClear)="onCancel($event)"
+    >
+    </ion-searchbar>
+  <div *ngFor="let buddy of mycontacts;let i = index;" (click)="sendwishes(buddy)">
+  <ion-item no-lines  >
+    <ion-avatar slot="start" style=" width: 45px !important;height: 45px !important;">
+      <img *ngIf="buddy.photourl=='default'" src="assets/imgs/chatterplace.png">
+      <img *ngIf="buddy.photourl!='default'"  [src]="sanitizer.bypassSecurityTrustUrl(buddy.photourl)">
+    </ion-avatar>
+    <ion-label>
+      <!-- <h2>Finn</h2> -->
+      <h3 style="text-transform: capitalize;font-weight: bold;color: #0c84b4;">{{buddy.username}}</h3>
+      <div>
+        <p *ngIf="buddy.advbday!=true&&buddy.belatedbday!=true">{{buddy.dob | date: "dd-MM-yyyy"}}</p>
+        <p *ngIf="buddy.advbday==true" style="color: limegreen;font-weight: bold;">{{buddy.dob | date: "dd-MM-yyyy"}}</p>
+        <p *ngIf="buddy.belatedbday==true" style="color: orangered;font-weight: bold;">{{buddy.dob | date: "dd-MM-yyyy"}}</p>
+        <img src="../../assets/imgs/bday.png" *ngIf="buddy.bday==true" style="height: 25px;"/>
+
+      </div>
+     
+    </ion-label>
+  </ion-item>
+</div>
+  </ion-list>
+
+</ion-content>

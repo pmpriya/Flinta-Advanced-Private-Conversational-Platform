@@ -1,0 +1,21 @@
+.profileimage{
+    
+    border-radius: 50%;
+    overflow: hidden;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+
+.profileimage1{
+        
+    overflow: hidden;
+
+    height: 400px;
+    position: relative;
+    -o-object-fit: cover;
+    object-fit: cover;
+    width: 95%;
+}

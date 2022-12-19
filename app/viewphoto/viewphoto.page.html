@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon (click)="dismissModal()" name="close" style="float: right;margin-top: 11px;margin-right: 17px;font-size: 25px;color: red;"></ion-icon>
+
+    <ion-title>View Photo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <label style="font-weight: 500;">File Name :{{filename}}</label>
+
+  <img  src="{{image}}"  style="width:100%;margin-top:10px">
+
+</ion-content>

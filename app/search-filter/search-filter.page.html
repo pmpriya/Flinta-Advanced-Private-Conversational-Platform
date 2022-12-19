@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Search Filter</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-row style="background-color:rgb(22,121,202);color:#fff">
+
+    <ion-col>
+      <ion-label style="color:#fff">From Date</ion-label>
+      <input [(ngModel)]="fromdate" class="form-control" style="background-color:#fff" type="date" [max]="todayDate" [ngModelOptions]="{timezone:'UTC'}">
+
+    </ion-col>
+    <ion-col>
+      <ion-label style="color:#fff">To Date</ion-label>
+      <input [(ngModel)]="todate" class="form-control"  style="background-color:#fff" type="date" [max]="todayDate" [ngModelOptions]="{timezone:'UTC'}">
+
+    </ion-col>
+
+  </ion-row>
+  <div *ngIf="groupmembers!=null && groupmembers.length!=0" style="text-align: center;color:#3f51b5;">Group Members</div>
+
+  <ion-row *ngIf="groupmembers!=null && groupmembers.length!=0" >
+    <ion-col>
+      <ion-list class="listview">
+        <ion-item *ngFor="let item of groupmembers">
+          <ion-label>{{item.username}}</ion-label>
+          <!-- <ion-checkbox id={{item.uid}}  [(ngModel)]="item.selected" (ionChange)="change(item)"></ion-checkbox> -->
+          <ion-checkbox color="dark" id={{item.uid}} (ionChange)="change(item)" [(ngModel)]="item.selected" item-right
+          ></ion-checkbox>
+        </ion-item>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+  <!-- <ion-row>
+    <ion-col style="text-align: center;">
+      <button class="cancelbtn" (click)="closeModal()">Cancel</button>
+      <button class="confirmbtn" (click)="Showall()">Show Conversation</button>
+    </ion-col>
+  </ion-row> -->
+</ion-content>
+
+<ion-footer style=" height: 50px !important;">
+
+  <ion-row style=" height: 50px !important;">
+    <button style="width: 100%;background: #ff656c !important;
+    color: white;" ion-button full (click)="Showall()">
+      <ion-icon style="position: relative;
+      top: 3px;" name="search-outline"></ion-icon>&nbsp;Show Conversation
+    </button>
+  </ion-row>
+
+</ion-footer>

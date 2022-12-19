@@ -1,0 +1,92 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title><span>
+                <i class="fa fa-lock" aria-hidden="true"></i>&nbsp; End-to-End Encrypted
+            </span>
+        </ion-title>
+        <!-- <ion-buttons slot="end">
+            <ion-button (click)="closeModal()">
+                <ion-icon slot="icon-only" name="close"></ion-icon>
+            </ion-button>
+        </ion-buttons> -->
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+ 
+    <div style="text-align: center;">
+        <div style="font-weight: bold;">{{buddyname}}</div>
+
+        <div *ngIf="showMyVideo" style=" margin-left: 10px;   float: left;
+        position: absolute;">
+            <video [ngStyle]="{'display': dispalyoption}" style="width: 60px;height:45px ;" id="my-video" (click)="swapVideo('partner-video')"
+             autoplay 
+                playsinline>
+                </video>
+        </div>
+        <div style="color: blue;font-weight: bold;" *ngIf="callStatus=='Ringing' && time==null">{{callStatus}}</div>
+        <div style="color: black;font-weight: bold;" *ngIf="callStatus=='Calling...' && time==null">{{callStatus}}</div>
+        <div style="color: black;font-weight: bold;" *ngIf="callReciveStatus!=null && time==null">{{callReciveStatus}}
+        </div>
+        <div style="color: green;font-weight: bold; " *ngIf="time!=null">Connected</div>
+
+        <h6>{{status}}</h6>
+        <div *ngIf="time!=null" style="text-align: center;margin-top: 5px;  ">{{time}}</div>
+
+        <img *ngIf="buddyimage!='default' && AudioCall=='Voice'" [src]="sanitizer.bypassSecurityTrustUrl(buddyimage)"
+            class="profileimage1">
+        <img *ngIf="buddyimage=='default' && AudioCall=='Voice'" src="assets/imgs/chatterplace.png"
+            class="profileimage1">
+
+
+    </div>
+
+    <ion-grid>
+     
+
+        <ion-row >
+            <ion-col style=" text-align: center;">
+
+               <div>
+                <video  id="partner-video" (click)="swapVideo('my-video')" autoplay playsinline
+               style="height:280px">
+            </video>
+               </div>
+            </ion-col>
+        </ion-row>
+
+
+    </ion-grid>
+</ion-content>
+
+
+<ion-footer style=" height: 50px !important;--background: white;">
+
+    <ion-row style=" height: 50px !important;text-align: center;">
+
+        <!-- <div style="text-align: center;width: 100%;"> -->
+
+
+        <ion-col *ngIf="receiveCall==true">
+            <img height="40" src="assets/green_call.png" (click)="callBuddy()">
+        </ion-col>
+
+        <ion-col *ngIf="streamReady==true">
+            <img height="40" src={{muteValue}} (click)="muteAudio()">
+        </ion-col>
+
+        <ion-col *ngIf="streamReady==true && AudioCall=='Video'">
+            <img height="40" src={{videomuteValue}} (click)="muteVideo()">
+        </ion-col>
+        <!-- <ion-col *ngIf="receiveCall==true && callReceive==false">
+                <img height="40" (click)="closeModal()" src='assets/red_call.jpg'>
+            </ion-col> -->
+
+        <ion-col>
+            <img height="40" (click)="closeModal()" src='assets/red_call.jpg'>
+        </ion-col>
+        <!-- </div> -->
+    </ion-row>
+
+</ion-footer>

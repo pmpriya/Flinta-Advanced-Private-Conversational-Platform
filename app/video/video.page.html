@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> <span>
+      <i class="fa fa-lock" aria-hidden="true"></i>&nbsp; End-to-End Encrypted
+      </span>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-row style="height: 15px"></ion-row>
+
+
+<ion-content [fullscreen]="true" style="text-align: center;--offset-bottom:0px !important;--background: lightgray;">
+  <!-- <img src='assets/calling.gif'> -->
+
+
+  <!-- <ion-grid>
+    <ion-row>
+      <ion-label color="primary">
+        {{infoLabel}}
+      </ion-label>
+    </ion-row> -->
+  <!-- <ion-row style="height: 80px; padding: 20px 0">
+      <ion-input placeholder="Enter number" [(ngModel)]="opponentId"></ion-input>
+    </ion-row> -->
+  <!-- <ion-row> -->
+  <!-- <div>
+        <ion-button color="primary" (click)="onClickCall($event)">
+          Call
+        </ion-button>
+      </div>
+      <div>
+        <ion-button color="danger" (click)="onClickHangUp($event)">
+          HangUp
+        </ion-button>
+      </div> -->
+  <div>
+    <h3>{{buddyname}}</h3>
+    <h6>{{status}}</h6>
+    <div *ngIf="time!=null" style="text-align: center;margin-top: 5px;">{{time}}</div>
+
+    <img *ngIf="buddyimage!='default'" [src]="sanitizer.bypassSecurityTrustUrl(buddyimage)" class="profileimage">
+    <img *ngIf="buddyimage=='default'" src="assets/imgs/chatterplace.png" class="profileimage">
+
+
+  </div>
+
+  <!-- <ng-template >
+                
+            </ng-template> -->
+  <!-- </ion-row>-->
+  <div style="display: none;">
+    <ion-row id="local-stream"></ion-row>
+    <ion-row id="remote-stream"></ion-row>
+  </div>
+
+  <!-- </ion-grid> -->
+</ion-content>
+<ion-footer style=" height: 50px !important;--background: white;">
+
+  <ion-row style=" height: 50px !important;text-align: center;">
+
+    <ion-col *ngIf="receiveCall==true">
+      <img height="40" src="assets/green_call.png" (click)="pickUpcall()">
+    </ion-col>
+
+    <ion-col>
+      <img height="40" src={{muteValue}} (click)="muteCall()">
+    </ion-col>
+    <ion-col>
+      <img height="40" (click)="onClickHangUp($event)" src='assets/red_call.jpg'>
+    </ion-col>
+
+  </ion-row>
+
+</ion-footer>

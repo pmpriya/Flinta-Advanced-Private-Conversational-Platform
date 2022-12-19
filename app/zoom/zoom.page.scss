@@ -1,0 +1,66 @@
+// Slider Style START 
+.custon-nav{
+  height: 48px;
+  width: 20px;
+  cursor: pointer;
+
+  vertical-align: middle;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.prev-icon-custom{
+  background: url(https://freakyjolly.com/demo/jquery/OwlCarousel2/nav-icon.png) no-repeat scroll 0px 0px;
+}
+.prev-icon-custom:hover{
+  background: url(https://freakyjolly.com/demo/jquery/OwlCarousel2/nav-icon.png) no-repeat scroll 0px 0px;
+  background-color: lightgrey;
+}
+.prev-icon-custom.disabled{
+  opacity: 0.4;
+  cursor: default;
+}
+.next-icon-custom{
+  background: url(https://freakyjolly.com/demo/jquery/OwlCarousel2/nav-icon.png) no-repeat scroll -32px 0px;
+  margin-left: 65px;
+}
+.next-icon-custom:hover{
+  background: url(https://freakyjolly.com/demo/jquery/OwlCarousel2/nav-icon.png) no-repeat scroll -32px 0px;
+  background-color: lightgrey;
+}
+.next-icon-custom.disabled{
+  opacity: 0.4;
+  cursor: default;
+}
+.slider-nav{
+  ion-icon{
+      height: 100%;
+  }
+}
+.imgFIle{
+  height: 217px;
+/* max-width: 100%; */
+border: 0;
+width: auto;  
+}
+.slide-zoom
+  {
+    width: 100% !important;
+  }
+  .image-slider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  .slidercss{
+    width: 96% !important;
+    margin-right: -7.5% !important;
+    padding: 5px;
+  }
+.slide-text{
+  position: absolute;
+  color: white;
+  bottom: 30px;
+}
+
+// Slider Style STOP
