@@ -1,1 +1,7 @@
 # Flinta-Advanced-Private-Conversational-Platform
+
+
+The objective of this project is to design a secure private messaging system that can provide easy to use functions of Conversations with number of unique and loveable features with 100% localization of data. While there are many conversational platforms like whatsapp, facebook, twitter, teams, etc. to make conversations so quick and enjoyable , it can’t be ignored that it comes with compromises on many factors especialy when it comes to data localization. With Covid-19, lots of organizations have expressed work from home as the path in the coming years, and writing an email for every query seems like a uphill task for many of us, especially having to wait long hours for professional responses. This takes longer time conceptualizing the content that matches the thoughts without compromising the sentiments of the receipient. Apart from time consuming and many a times no-so-good factor, emails occupies a good amount of disk space and bandwidth of internet. Not only, it is very cumbersome to find the chain or conversational thread on emails as many times search engines of email software are not delivering the expected data on time. Thus, there seems to be a dying need for a more secured messaging system for effective communication.
+
+This application has a back office model and uses functionalitie such as socket programming, Sync, WebRTC for audio/video calling and google location services.   
+
