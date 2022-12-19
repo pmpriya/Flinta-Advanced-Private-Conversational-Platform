@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Assign Task</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <div>
+    <p></p>
+  </div> -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Task:</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <!-- <div *ngFor="let task of taskdetails;"> -->
+      <p style="font-size: larger;text-transform: capitalize;" [innerHTML]="taskdata.message">{{taskdata.message}}</p>
+      <!-- </div> -->
+    </ion-card-content>
+  </ion-card>
+  <div style="padding: 10px;">
+    <!-- <div style="margin: 20px 0;">
+      <ion-label style="color: #0496d0;">Assign To &nbsp;<span style="color: red;">*</span></ion-label>
+      <ion-select style="border: 1px solid;border-radius: 5px;margin: 10px 0;" placeholder="Please select"
+        [(ngModel)]="assign_to">
+        <div *ngFor="let contact of contacts">
+          <ion-select-option *ngIf="contact.mobile!=my_no&&contact.userstatus=='A'" [value]="contact">
+            {{contact.username}}</ion-select-option>
+        </div>
+      </ion-select>
+    </div> -->
+
+ 
+    <div style="margin: 20px 0;">
+      <!-- <ion-searchbar placeholder="Filter Employee" (input)="SearchValue()"  [(ngModel)]="term"
+      (ionCancel)="onCancel($event)"  animated="true"></ion-searchbar> -->
+      <!-- <ion-searchbar  style="border: 1px solid;border-radius: 5px;" (input)="SearchValue($event)" placeholder="Search"  [(ngModel)]="empSerach" (ionClear)="onCancel($event)"
+      >
+      </ion-searchbar> -->
+
+
+    <ion-searchbar [(ngModel)]="empSerach" style="    border: 1px solid;
+    border-radius: 5px;position:relative;top:10px" (input)="SearchValue($event)"
+    placeholder="Search" (ionClear)="onCancel($event)" showCancelButton="never" placeholder="Search"
+    animated="true">
+  </ion-searchbar>
+
+      <!-- List Items -->
+      <ion-list *ngIf="empCodeList1.length!=0" style="    border: 1px solid #7a62fe;
+      position: fixed;
+      z-index: 1000;
+      width: 85%;
+      border-radius: 10px;">
+        <ion-item *ngFor="let item of empCodeList1 ">
+          <ion-label style="    color: black;" (click)="selectedvalue(item.mobile,item.username)">{{item.username}}</ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+    <!-- <div style="display: grid;margin: 20px 0;">
+    <label style="color: #0496d0;">Estimated Date & Time</label>
+    <input style="padding: 8px;border-radius: 5px;margin: 5px 0;width: 100%;background-color: transparent;"  id="due_date" name="due_date" type="datetime-local"/>
+  </div> -->
+
+    <div style="display: grid;margin: 20px 0;">
+      <label style="color: #0496d0;">From Date &nbsp;<span style="color: red;">*</span></label>
+      <input style="padding: 8px;border-radius: 5px;margin: 5px 0;width: 100%;background-color: transparent;"
+        id="from_date" name="from_date" type="date" />
+    </div>
+    <div style="display: grid;margin: 20px 0;">
+      <label style="color: #0496d0;">Due Date &nbsp;<span style="color: red;">*</span></label>
+      <input style="padding: 8px;border-radius: 5px;margin: 5px 0;width: 100%;background-color: transparent;"
+        id="due_date" name="due_date" type="date" />
+    </div>
+    <div style="display: grid;margin: 20px 0;">
+      <label style="color: #0496d0;">Estimated Hours &nbsp;<span style="color: red;">*</span></label>
+      <input style="padding: 8px;border-radius: 5px;margin: 5px 0;width: 100%;background-color: transparent;"
+        maxlength="2" id="esti_time" name="esti_time" type="number" />
+    </div>
+
+    <!-- <div>
+    <ion-label>Status</ion-label>
+    <ion-input style="border: 1px solid;border-radius: 5px;margin: 10px 0;" type="text" [(ngModel)]="buddyname" disabled></ion-input>
+  </div> -->
+    <ion-item style="margin: 20px 0;border-radius: 5px;border: 1px solid white;border-radius: 5px;">
+      <ion-label style="color: #0496d0;">Status &nbsp;<span style="color: red;">*</span></ion-label>
+    <!-- <select [(ngModel)]="status">
+      <option *ngFor="let option of statusoption" value="{{option.value}}">
+        {{option.name}}
+      </option>
+    </select> -->
+      <ion-select placeholder="Select" [(ngModel)]="status" [disabled]="selectstatus">
+        <ion-select-option *ngFor="let option of statusoption" value="{{option.value}}">{{option.name}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
+
+  <div style="text-align: center;">
+    <ion-button color="success" (click)="assigntask()">Submit</ion-button>
+  </div>
+
+</ion-content>

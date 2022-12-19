@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Customise</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="changeClosemodal()"><ion-icon title="Close" name="close" style="color:red"></ion-icon></ion-button>
+   </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+<h3>Choose Font Style</h3>
+<ion-item>
+  <ion-label>Font Style</ion-label>
+  <ion-select [(ngModel)]="font" (ionChange)="setfont($event.detail.value)">
+    <ion-select-option value="inherit"  class="inherit" selected>
+      <p style="color: red;">Default</p>
+    </ion-select-option>
+    <ion-select-option value="CaviarDreams" class="cavirdreams">CaviarDreams</ion-select-option>
+    <ion-select-option value="Ostrich" class="Ostrich">Ostrich</ion-select-option>
+    <ion-select-option value="Josefinsans" class="Josefinsans">Josefinsans</ion-select-option>
+    <ion-select-option value="Pacifico" class="Pacifico">Pacifico</ion-select-option>
+  </ion-select>
+</ion-item>
+</ion-content>
+

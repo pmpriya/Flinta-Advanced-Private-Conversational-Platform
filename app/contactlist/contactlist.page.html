@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Contacts</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closemodal()"><ion-icon name="close" title="Close" style="color: red;"></ion-icon></ion-button>
+   </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item *ngIf="invitedcontacts.length!=0 && this.eventdata.share_event != 'file'&&this.eventdata.event != 'mom'" style="text-align: center;--background: darkgrey; color: white;" (click)="toggleview()">
+    <ion-label>View Invited</ion-label>
+  </ion-item>
+  <ion-list *ngIf="view && invitedcontacts.length!=0">
+    <div *ngFor="let data of invitedcontacts">
+      <!-- *ngIf="data.createdby!=mynumber&&data.userstatus=='A'" -->
+      <ion-item>
+        <ion-label  [ngStyle]="{'color': colorCode}">{{data.buddyname}}</ion-label>
+      </ion-item>
+    </div>
+  </ion-list>
+
+  <ion-searchbar [(ngModel)]="searchstring" style="border: 1px solid;border-radius:30px;height:45px" (input)="searchuser($event)" placeholder="Search" (ionClear)="onCancel($event)" showCancelButton="never" placeholder="Search" animated="true">
+  </ion-searchbar>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Select all</ion-label>
+      <ion-checkbox slot="end"  [(ngModel)]="selectall" [indeterminate]=indstate (ionChange)="changeselect()"></ion-checkbox>
+    </ion-item>
+    <div *ngFor="let contact of contacts ; let i = index;">
+    <ion-item no-lines *ngIf="contact.userstatus=='A'" (ionChange)="getCheckboxValues($event,contact)">
+      <ion-avatar slot="start">
+        <!-- <img src={{contact.photourl}}> -->
+        <img *ngIf="contact.photourl=='default'" src="assets/imgs/chatterplace.png">
+        <img *ngIf="contact.photourl!='default'" src={{contact.photourl}}>
+      </ion-avatar>
+      <ion-label>
+        <h3 style="text-transform: capitalize;font-weight: bold;" [ngStyle]="{'color': colorCode}">{{contact.username}}</h3>
+        <h3 style="text-transform: capitalize;float: left;font-size: 13px;color: gray;">{{contact.designation}}</h3>
+      </ion-label>
+      <ion-checkbox slot="end"  [(ngModel)]="contact.isChecked"></ion-checkbox>
+    </ion-item>
+  </div>
+  </ion-list>
+  <ion-list no-lines style="cursor: pointer;">
+    <!-- <div class="group1" *ngIf="allmygroups!=null && allmygroups.length!=0">
+    <span>Joined groups</span>
+  </div> -->
+    <!-- <hr *ngIf="allmygroups!=null && allmygroups.length!=0" class="grphr"/> -->
+
+    <ion-item *ngFor="let item of allmygroups" (ionChange)="getCheckboxValues($event,item)" [ngClass]="{'highlighted' : (item.groupname == groupname)}"
+      style="border-bottom: 1px solid lightgrey;border-style: initial;">
+      <ion-avatar item-left style=" width: 45px !important;height: 45px !important;">
+
+        <img *ngIf="item.groupimage=='default'" src="assets/imgs/groupIcon.png">
+        <img *ngIf="item.groupimage!='default'" [src]="sanitizer.bypassSecurityTrustUrl(item.groupimage)">
+      </ion-avatar>
+
+      <ion-label style="margin-left: 10px;    height: 25px;">
+        <h4 style="
+font-size: 14px;
+font-weight: bold; margin-bottom: -4px;" [ngStyle]="{'color': colorCode}">&nbsp;{{item.groupname}}</h4>
+     
+      </ion-label>
+
+      <ion-checkbox slot="end"  [(ngModel)]="item.isChecked"></ion-checkbox>
+    </ion-item>
+    <!-- <ion-list-header class="group">
+  Open groups
+</ion-list-header>
+<ion-item *ngFor="let item of opengrps">
+    <ion-avatar item-left>
+      <img src="{{item.groupimage}}">
+    </ion-avatar>
+    <h3 (click)="openchat(item)" style="text-transform :capitalize">{{item.groupName}}</h3>
+  </ion-item> -->
+  </ion-list>
+  <ion-fab  horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button *ngIf="invite_contacts&&invite_contacts.length>0" style="--background: #0c84b4;" (click)="sendinvite()">
+      <ion-icon name="paper-plane" *ngIf="this.eventdata.event != 'mom'"></ion-icon>
+      <ion-icon name="checkmark" *ngIf="this.eventdata.event == 'mom'"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

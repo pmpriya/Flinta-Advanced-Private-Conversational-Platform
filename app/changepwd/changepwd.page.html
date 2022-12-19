@@ -1,0 +1,50 @@
+
+
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Change Password</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="changeClosemodal()"><ion-icon title="Close" name="close" style="color:red"></ion-icon></ion-button>
+   </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="login-panel-section" style="margin: 25px;">
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-key fa-fw" aria-hidden="true"></i></span>
+        <input class="form-control" maxlength="100" autocomplete="new-password"  placeholder="Old Password" [(ngModel)]="oldpass"
+         >
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-key fa-fw" aria-hidden="true"></i></span>
+        <input class="form-control" maxlength="100" (keyup)="CheckPassword(newPass)" autocomplete="new-password"  placeholder="New Password" [(ngModel)]="newPass"
+         >
+        
+         <!-- <span *ngIf="newPass!=undefined && newPass!='' && passwordmust" style="color:red;z-index:1000;background-color:#fff;padding:10px">
+          Minimum 8 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character
+         </span> -->
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-key fa-fw" aria-hidden="true"></i></span>
+        <input class="form-control" maxlength="100" autocomplete="new-password"  placeholder="Confirm Password" [(ngModel)]="confrimPwd"
+          >
+      </div>
+    </div>
+
+    <div class="login-panel-section" style="text-align:center;">
+      <button type="submit" class="btn btn-default" style="background: #00bfa5;    margin-left: 20px;
+      color: white;" (click)="Loginevent()"><i class="fa fa-sign-in" aria-hidden="true"></i>
+        Submit</button>
+
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,52 @@
+
+
+
+
+  <ion-row style="    text-align: center;
+  margin-top: 25px;">   
+    <ion-col col-12 col-md-12 col-lg-12 col-xl-12>
+      <div class="contacts">
+        <a class="button live allcontact"  [ngStyle]="{'background-color': backgroundAll, 'color': fontcolorall}"
+          (click)="filterContacts(0)">
+         <span></span> <span>All</span>
+        </a>
+        <a class="button live livecontact" [ngStyle]="{'background-color': backgroundLive, 'color': fontcolorlive}"
+          (click)="filterContacts(1)">
+          <span></span> <span>Live</span>
+        </a>
+
+        <span *ngIf="status==0" style="text-align: center;margin-top: 15px;"> &nbsp; &nbsp;All Contacts: {{contacts.length}}</span>
+        <span *ngIf="status==1" style="text-align: center;margin-top: 15px;"> &nbsp; &nbsp;Live Contacts: {{contacts.length}}</span>
+      
+      </div>
+  
+    </ion-col>
+  </ion-row>
+
+  <ion-list style="margin-top: 10px;" >
+    <ion-searchbar  (input)="searchuser($event)" placeholder="Search" (ionClear)="onCancel($event)"
+    >
+    </ion-searchbar>
+    <div *ngFor="let contact of contacts;let i = index;">
+    <ion-item no-lines  >
+      <ion-avatar slot="start" style=" width: 45px !important;height: 45px !important;">
+        <img *ngIf="contact.photourl=='default'" src="assets/imgs/chatterplace.png">
+        <img (click)="zoomImage(contact.photourl)" *ngIf="contact.photourl!='default'"  [src]="sanitizer.bypassSecurityTrustUrl(contact.photourl)">
+      </ion-avatar>
+      <ion-label (click)="chat(contact)">
+        <!-- <h2>Finn</h2> -->
+        <h3 style="text-transform: capitalize;font-weight: bold;"
+        [ngStyle]="{'color': colorCode}">{{contact.username}}</h3>
+        <div>
+          <p style="text-transform: capitalize;float: left;font-size: 13px;color: gray;">{{contact.designation}}</p>
+          <p class="online" *ngIf="contact.status=='online'"></p>
+          <p class="offline" *ngIf="contact.status!='online'"></p>
+
+        </div>
+       
+      </ion-label>
+    </ion-item>
+  </div>
+    </ion-list>
+
+ 

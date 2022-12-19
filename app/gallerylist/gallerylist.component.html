@@ -1,0 +1,30 @@
+<ion-row>
+  <ion-col col-3>
+    <!-- <img src='assets/imgs/camera.png' *ngIf="!mobileicon" class="chatpop" (click)="webcamera()" /> -->
+    <img src='assets/imgs/camera.png' title="Camera" class="chatpop" (click)="buddyinfo(1)" />
+    <!-- sendPicCamera  takeCamera-->
+  </ion-col>
+</ion-row>
+<ion-row>
+  <ion-col col-3>
+    <input type="file" id="imgupload2"    style="display:none" (change)="onUploadChange($event)"/>
+    <img src='assets/imgs/gallery.jpg' title="Gallery"  class="chatpop"  (click)="buddyinfo(2)"/>
+
+   
+  </ion-col>
+</ion-row>
+<ion-row>
+<ion-col col-3>
+  
+<input type="file" id="imgupload"    style="display:none" (change)="onUploadChange($event)"/>
+<img src='assets/imgs/document.png' title="Document"  class="chatpop" (click)="buddyinfo(3)"/>
+
+  </ion-col> 
+</ion-row>
+<ion-row>
+  <ion-col col-3>
+    <img src='assets/imgs/location.png' title="Location" class="chatpop" (click)="buddyinfo(4)" />
+
+  </ion-col>
+
+</ion-row>

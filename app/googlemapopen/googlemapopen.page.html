@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>googlemapopen</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  {{queryParams}}
+  <iframe width="100%" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=+{{queryParams}}+&amp;key=AIzaSyDGQhzcQYbQf9E7dzGUz-R7BVp2iFeNLfI"></iframe>
+
+  <!-- <iframe width="100%" height="100%" [src]="url"></iframe> -->
+</ion-content>

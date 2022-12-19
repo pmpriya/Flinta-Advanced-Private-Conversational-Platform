@@ -1,0 +1,997 @@
+<ion-router-outlet id="main"></ion-router-outlet>
+
+<ion-menu side="end" menuId="first" contentId="main">
+  <ion-header>
+    <!-- <ion-toolbar>
+      <ion-title style="text-transform: capitalize;">{{buddydetails.username}}</ion-title>
+
+    </ion-toolbar> -->
+
+    <ion-toolbar>
+      <ion-title>
+        <ion-title style="text-transform: capitalize;">{{buddydetails.username}}</ion-title>
+      </ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="closeModal()">
+          <ion-icon slot="icon-only" name="close"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+
+  </ion-header>
+  <ion-content>
+    <ion-list style="font-size: 14px;">
+      <ion-item><span style="color: #0c84b4;">Employee Code :</span>{{buddydetails.employee}}</ion-item>
+      <ion-item><span style="color: #0c84b4;">Gender :</span>{{buddydetails.gender}}</ion-item>
+      <ion-item><span style="color: #0c84b4;">Mobile :</span>{{buddydetails.mobile}}</ion-item>
+      <ion-item><span style="color: #0c84b4;">Email :</span>{{buddydetails.email}}</ion-item>
+      <ion-item><span style="color: #0c84b4;">Designation :</span>{{buddydetails.designation}}</ion-item>
+      <ion-item><span style="color: #0c84b4;">Department :</span>{{buddydetails.department}}</ion-item>
+      <!-- <ion-item> Block :{{buddydetails.department}}</ion-item> -->
+      <ion-item>
+        <ion-label><span style="color: #0c84b4;">Self Destruct :</span></ion-label>
+        <ion-toggle [(ngModel)]="self_destruct"></ion-toggle>
+      </ion-item>
+
+
+
+      <!-- <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item> -->
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-header>
+  <ion-toolbar translucent *ngIf="!selection_status">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <!-- <ion-avatar slot="start" style="padding: 8px;"  class="profileimage">
+      <img src={{buddydetails.photourl}}>
+    </ion-avatar> -->
+    <ion-buttons slot="end">
+      <ion-button (click)="menuCLick()">
+        <ion-icon name="ellipsis-vertical" style="font-size: 25px;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+
+    <div>
+
+
+      <div text-left style="width: auto !important;">
+        <img *ngIf="buddydetails.photourl!='default'" (click)="clickEVent()"
+          [src]="sanitizer.bypassSecurityTrustUrl(buddydetails.photourl)" class="profileimage">
+        <img *ngIf="buddydetails.photourl=='default'" (click)="clickEVent()" src="assets/imgs/chatterplace.png"
+          class="profileimage">
+
+        <div style="margin-top: -46px;
+      margin-left: 13px;">
+
+          <div *ngIf="searchinput==false" (click)="clickEVent()">
+            <span
+              style="margin-left: 30px;font-size: 14px;text-transform: capitalize;">{{buddydetails.username}}</span><br />
+            <span *ngIf="BuddyTyping==false && buddydetails!=undefined && buddydetails.status=='offline'"
+              style="margin-left: 30px;font-size: 9px;font-weight: normal;">last seen
+              {{buddydetails.last_changed | date: "MMM d, y hh:mm a" |lowercase}}</span>
+
+            <span *ngIf="BuddyTyping==false && buddydetails!=undefined && buddydetails.status=='Offline'"
+              style="margin-left: 30px;font-size: 10px;font-weight: normal;">offline</span>
+
+            <span *ngIf="BuddyTyping==false && buddydetails!=undefined && buddydetails.status=='online'"
+              style="margin-left: 30px;font-size: 15px;">{{buddydetails.status}}</span>
+            <span *ngIf="BuddyTyping==true" style="margin-left: 30px;font-size: 15px;">typing...</span>
+            <span *ngIf="buddydetails.status==undefined" style="margin-left: 30px;font-size: 14px;">loading...</span>
+
+
+          </div>
+
+          <div style="    margin-top: -7px;">
+
+            <img *ngIf=" searchinput==false && forwardFlag==false && deleteFlag==false" style="float: right;display:-webkit-inline-box !important;margin-right: 0px; margin-top: -35px;
+            height: 36px;" src="assets/call.png" (click)="audioCall()" />
+  
+            <img *ngIf="searchinput==false && forwardFlag==false && deleteFlag==false" style="float: right;display:-webkit-inline-box !important;margin-right: 15px; margin-top: -35px;
+       height: 32px;;" src="assets/video.png" (click)="videoCall()" />
+  
+            <ion-searchbar style='margin-left:25px;width:80%' *ngIf="searchinput==true" [(ngModel)]="searchTerms"
+              [showCancelButton]="false" (ionClear)="onCancel($event)"></ion-searchbar>
+  
+          </div>
+
+
+          <!-- <button ion-button (click)="searchshow()"> -->
+          <!-- <img style="float: right;
+            display: -webkit-inline-box !important;
+            margin-right: 45px;
+            margin-top: -35px;
+            height: 32px;
+            border-radius: 15px;" src="assets/search.png" (click)="searchshow()" /> -->
+
+          <!-- <ion-icon class="ionicon" style="float: right;
+            display: -webkit-inline-box !important;
+            margin-right: 0px;
+            margin-top: -35px;
+            height: 28px;
+            border-radius: 15px;"  name="search" (click)="searchshow()"></ion-icon> -->
+
+          <!-- </button> -->
+
+          <button *ngIf="forwardFlag==true" ion-button style="float: right;
+          display: -webkit-inline-box !important;
+          margin-right: 0px;
+          margin-top: -35px;
+          height: 28px;
+          border-radius: 15px;" (click)="forward()">
+            <ion-icon name="return-up-forward-outline"></ion-icon>
+          </button>
+
+          <button *ngIf="deleteFlag==true" ion-button style="float: right;
+          display: -webkit-inline-box !important;
+          margin-right: 0px;
+          margin-top: -35px;
+          height: 28px;
+          border-radius: 15px;" (click)="deleteFunction()">
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+
+          <!--  <img style="float: right;display:-webkit-inline-box !important;margin-right: 10px; margin-top: -19px;
+          height: 30px;" src="assets/filterIcon.png" (click)="chatfilter()" /> -->
+          <!-- 
+          <ion-buttons slot="end">
+            <ion-button (click)="menu()"><ion-icon name="ellipsis-vertical" style="font-size: 25px;"></ion-icon></ion-button>
+          </ion-buttons> -->
+
+        </div>
+
+
+      </div>
+
+      <!-- <ion-buttons end style="margin-bottom: 15px;font-size: 0px;">
+
+
+
+
+      </ion-buttons> -->
+    </div>
+
+  </ion-toolbar>
+
+</ion-header>
+
+<!-- <ion-content class="bg" fullscreen='false' #content scroll="true"> -->
+<ion-content class="bg" #content overflow-scroll="true" [style.background-image]="'url(' + imageLink + ')'"
+  style='background: 0 0/100% 100% no-repeat'>
+
+  <!-- <div id="B">welcoe</div>
+  <div id="A"> -->
+  <div>
+    <ion-refresher slot="fixed" (ionRefresh)="getUsersList($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <!-- <ion-infinite-scroll threshold="100px" Type="top" (ionInfinite)="getUsersList($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll> -->
+
+    <ion-grid>
+      <div *ngFor="let item of allmessages;let i = index;">
+
+        <ion-row id="chatrow{{i}}" (press)="onPress($event,item,i)" (pressup)="onPressUp($event)"
+          [style.touch-action]="'pan-y'" [ngStyle]="{'background-color': item.selectedColor}">
+
+          <ion-row style="width: 100%;" *ngIf="item.timeset!=null && item.timeset!=undefined ">
+            <div class="timestampdate">{{item.timeset}}</div><br />
+          </ion-row>
+          <!--Forward selection-->
+          <ion-checkbox color="dark" *ngIf="forwardClick==true || deleteFlag==true" [(ngModel)]="item.selected"
+            (ionChange)="forwardSelection(item.selected,item)" item-right checked="false">
+          </ion-checkbox>
+          <ion-row style="width: 100%;" *ngIf="item.unreadMessageCount!=null && item.unreadMessageCount!=''">
+            <div class="timestampdate">{{item.unreadMessageCount}}</div><br />
+          </ion-row>
+          <ion-row style="width: 100%;" *ngIf="item.filetype=='call text'">
+            <div class="timestampdate"><span style="color: red;" data-testid="miss" data-icon="miss" class="_25zst">
+                <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 17" width="20" height="17"><path fill="currentColor" d="M18.2 12.1c-1.5-1.8-5-2.7-8.2-2.7s-6.7 1-8.2 2.7c-.7.8-.3 2.3.2 2.8.2.2.3.3.5.3 1.4 0 3.6-.7 3.6-.7.5-.2.8-.5.8-1v-1.3c.7-1.2 5.4-1.2 6.4-.1l.1.1v1.3c0 .2.1.4.2.6.1.2.3.3.5.4 0 0 2.2.7 3.6.7.2 0 1.4-2 .5-3.1zM5.4 3.2l4.7 4.6 5.8-5.7-.9-.8L10.1 6 6.4 2.3h2.5V1H4.1v4.8h1.3V3.2z"></path></svg></span> -->
+                <ion-icon style="color: red;font-size: 12.5px;" name="call-outline"></ion-icon>
+              </span><span style="font-size: 12.5px;">&nbsp; {{item.message}}</span> </div><br />
+          </ion-row>
+
+          <ion-row style="width: 100%;" *ngIf="item.filetype=='video text'">
+            <div class="timestampdate"><span style="color: red;" data-testid="miss" data-icon="miss" class="_25zst">
+                <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 17" width="20" height="17"><path fill="currentColor" d="M18.2 12.1c-1.5-1.8-5-2.7-8.2-2.7s-6.7 1-8.2 2.7c-.7.8-.3 2.3.2 2.8.2.2.3.3.5.3 1.4 0 3.6-.7 3.6-.7.5-.2.8-.5.8-1v-1.3c.7-1.2 5.4-1.2 6.4-.1l.1.1v1.3c0 .2.1.4.2.6.1.2.3.3.5.4 0 0 2.2.7 3.6.7.2 0 1.4-2 .5-3.1zM5.4 3.2l4.7 4.6 5.8-5.7-.9-.8L10.1 6 6.4 2.3h2.5V1H4.1v4.8h1.3V3.2z"></path></svg></span> -->
+                <ion-icon style="color: red;font-size: 12.5px;" name="videocam-outline"></ion-icon>
+              </span> <span style="font-size: 12.5px;"> &nbsp;&nbsp;{{item.message}}</span></div><br />
+          </ion-row>
+
+
+          <div *ngIf="item.filetype=='title'" class="timestampdate">{{item.message}}</div><br />
+
+          <!--friend-->
+          <ion-col size="9"
+            *ngIf="item.sentby !== currentUser&& item.filetype!='title' && item.filetype!='video text' && item.filetype!='call text'"
+            class="message other-message">
+            <div class="chatbubble-left">
+
+
+              <div
+                *ngIf="item.forwardmsg!=null && item.forwardmsg!='undefined' && item.forwardmsg!='null' && item.forwardmsg!=buddydetails.mobile"
+                style="    font-size: 13px;
+              font-style: italic;
+          color: lightgray;">
+                <i class="fa fa-share" aria-hidden="true"></i> Forwarded
+              </div>
+              <!--Reply Tag text-->
+              <span
+                *ngIf="item.tagmessage!='' && item.tagmessage!=null && item.tagmessage!='undefined' && item.tagmessage!='null'"
+                style="border-bottom: 1px solid black;color: #E91E63;">
+
+                <span *ngIf="item.tagfiletype=='text'" style="white-space: pre-line !important;" text-wrap
+                  [innerHTML]="item.tagmessage | highlightPipe:searchTerms"></span>
+
+                <!--Image file-->
+                <div
+                  *ngIf="item.tagfiletype=='image' || item.tagfiletype=='JPG' || item.tagfiletype=='jpg' || item.tagfiletype=='png' || item.tagfiletype=='PNG' || item.tagfiletype=='JPEG' || item.tagfiletype=='jpeg' || item.tagfiletype=='gif' || item.tagfiletype=='GIF'">
+                  <img src="{{item.tagmessage}}">
+                </div>
+                <!--Any document-->
+
+                <div>
+
+                  <a
+                    *ngIf="item.tagfiletype=='dotx' ||item.tagfiletype=='doc' || item.tagfiletype=='dot' || item.tagfiletype=='docx'">
+
+                    <p text-wrap class="fileexten">{{item.tagfileextension}}</p>
+                  </a>
+                  <a
+                    *ngIf="item.tagfiletype=='xls' || item.tagfiletype=='xlsx' || item.tagfiletype=='xlt'|| item.tagfiletype=='xla' ">
+
+                    <p text-wrap class="fileexten">{{item.tagfileextension}}</p>
+                  </a>
+
+                  <a *ngIf="item.tagfiletype=='txt' || item.tagfiletype=='TXT'">
+
+                    <p text-wrap class="fileexten">{{item.tagfileextension}}</p>
+                  </a>
+
+                  <a *ngIf="item.tagfiletype=='pdf' || item.tagfiletype=='PDF'">
+
+                    <p text-wrap class="fileexten">{{item.tagfileextension}}</p>
+                  </a>
+                  <a
+                    *ngIf="item.tagfiletype=='pps' || item.tagfiletype=='ppa'  || item.tagfiletype=='pptx' || item.tagfiletype=='potx'">
+
+                    <p text-wrap class="fileexten">{{item.tagfileextension}}</p>
+                  </a>
+
+                </div>
+
+
+                <!--Location-->
+                <a *ngIf="item.Taglocation=='true'">
+                  <img
+                    src="{{getMap}}center={{item.latitude}}&zoom=18&size=300x300&markers=color:red%7Clabel:S%7C{{item.latitude}}">
+                </a>
+
+                <!--Audio file-->
+                <audio *ngIf="item.tagfiletype=='audio' || item.tagfiletype=='mp3'" controls controlsList="nodownload">
+                  <source [src]="sanitizer.bypassSecurityTrustUrl(item.tagmessage)" type="audio/ogg">
+                  <source [src]="sanitizer.bypassSecurityTrustUrl(item.tagmessage)" type="audio/mpeg">
+                </audio>
+                <!--Video file-->
+                <video *ngIf="item.tagfiletype=='mp4' || item.tagfiletype=='avi' || item.tagfiletype=='flv'" width="200"
+                  preload="none" height="125" controls controlsList="nodownload">
+                  <source [src]="sanitizer.bypassSecurityTrustUrl(item.tagmessage)" type="video/mp4">
+                  <source [src]="sanitizer.bypassSecurityTrustUrl(item.tagmessage)" type="video/ogg">
+                </video>
+
+                <p class="stable singleTick">{{item.tagtime | date: "hh:mm a"  }} </p>
+                <!--| lowercase-->
+                <h6></h6>
+              </span>
+              <div>
+                <!-- [hidden]="selfdestruct" -->
+
+                <!-- <span *ngIf="!item.showMore"> -->
+
+                <span *ngIf=" !item.showMore && item.filetype=='text' && item.message!=''"
+                  style="white-space: pre-line !important;color: black;margin-right: 15px;" text-wrap
+                  [innerHTML]="trimString(item.message,150)| highlightPipe:searchTerms"></span>
+
+                <!-- </div> -->
+                <!-- <div *ngIf="item.showMore"> -->
+
+                <span *ngIf="item.showMore &&item.filetype=='text' && item.message!='' && hidetext(item)"
+                  style="white-space: pre-line !important;color: black;" text-wrap
+                  [innerHTML]="item.message| highlightPipe:searchTerms"></span>
+
+                <!-- </div> -->
+                <a *ngIf="item.message.length>150 &&  item.filetype=='text'" style="color: #039be5;cursor: pointer;font-size: 14px;"
+                  (click)="item.showMore = !item.showMore">Read <span [innerHtml]="item.showMore ? 'less' : 'More'">
+                  </span>
+                </a>
+
+
+
+
+                <img style="object-fit: cover;width:245px;height:245px;margin-bottom: 10px;"
+                  [src]="sanitizer.bypassSecurityTrustUrl(item.message)"
+                  *ngIf="item.filetype=='image' || item.filetype=='JPG' || item.filetype=='jpg' || item.filetype=='png' || item.filetype=='PNG' || item.filetype=='JPEG' || item.filetype=='jpeg' || item.filetype=='gif' || item.filetype=='GIF'"
+                  (click)="ZoomFile(item.message)">
+
+                <!--Doc format-->
+                <a *ngIf="item.filetype=='dotx' ||item.filetype=='doc' || item.filetype=='dot' || item.filetype=='docx'"
+                  (click)="getPermission(item.message,item.fileextension,item.filetype)">
+                  <img style="height:35px;" src="assets/imgs/wordDoc.png">
+                  <h6 text-wrap class="fileexten">{{item.fileextension}}</h6>
+                </a>
+
+                <!--XLS format-->
+                <div
+                  *ngIf="item.filetype=='xls' || item.filetype=='xlsx' || item.filetype=='xlt'|| item.filetype=='xla'"
+                  (click)="getPermission(item.message,item.fileextension,item.filetype)">
+                  <img style="height:35px;" src="assets/imgs/excelDoc.png">
+                  <h6 text-wrap class="fileexten">{{item.fileextension}}</h6>
+                </div>
+                <!--PDF Format-->
+                <div *ngIf="item.filetype=='pdf' || item.filetype=='PDF'"
+                  (click)="getPermission(item.message,item.fileextension,item.filetype)">
+                  <img style="height:35px;" src="assets/imgs/pdfDoc.png">
+                  <h6 text-wrap class="fileexten">{{item.fileextension}}</h6>
+                </div>
+
+                <!--Txt Format-->
+                <a *ngIf="item.filetype=='txt' || item.filetype=='TXT'"
+                  (click)="getPermission(item.message,item.fileextension,item.filetype)">
+                  <img style="height:35px;" src="assets/imgs/txtFormat.png">
+                  <span text-wrap class="fileexten">{{item.fileextension}}</span>
+                </a>
+
+                <!--PPT format-->
+                <a *ngIf="item.filetype=='pps' || item.filetype=='ppa'  || item.filetype=='pptx' || item.filetype=='potx'"
+                  (click)="getPermission(item.message,item.fileextension,item.filetype)">
+                  <img style="height:35px;" src="assets/imgs/ppt.png">
+                  <h6 text-wrap class="fileexten">{{item.fileextension}}</h6>
+                </a>
+
+                <!--google location file-->
+                <a *ngIf="item.filetype=='map'" (click)='Mappopover(item.message)'>
+                  <img
+                    src="{{getMap}}center={{latitude}}&zoom=18&size=300x300&markers=color:red%7Clabel:S%7C{{item.message}}">
+                </a>
+
+                <!-- <a *ngIf="item.filetype=='map live'">
+                <img style="width: 100% !important;"
+                  src="{{getMap}}center={{latitude}}&zoom=18&size=300x300&markers=color:red%7Clabel:S%7C{{item.message}}">
+                  
+              </a> -->
+                <p *ngIf="item.filetype=='map live'" (click)="liveLocation(item.message,item.timestamp,item.sentby)">
+                  <img style="width: 100% !important;"
+                    src="{{getMap}}center={{latitude}}&zoom=18&size=300x300&markers=color:red%7Clabel:S%7C{{item.message}}">
+
+                </p>
+                <p *ngIf="item.livelocation!='undefined' &&(item.livelocation=='false' || item.livelocation==false)"
+                  style="font-size: 14px;text-align:center;height: 0px;color: #b3aea8;">Live Location Ended</p>
+
+                <button *ngIf="item.filetype=='map live' && item.livelocation=='true' || item.livelocation==true" style="border-radius: 10px;width: 100%;background: #ff656c !important;
+              color: white;" ion-button full (click)="liveLocation(item.message,item.timestamp,item.sentby)">
+                  <ion-icon style="position: relative;
+                top: 3px;" name="navigate-outline"></ion-icon>&nbsp;live location
+                </button>
+
+                <!-- <br/> -->
+
+                <!--Audio file-->
+                <audio *ngIf="item.filetype=='audio' || item.filetype=='mp3'" controls controlsList="nodownload">
+
+                  <source [src]="sanitizer.bypassSecurityTrustUrl(item.message)" type="audio/ogg">
+                  <source [src]="sanitizer.bypassSecurityTrustUrl(item.message)" type="audio/mpeg">
+                </audio>
+
+
+                <!--Video file-->
+                <video *ngIf="item.filetype=='mp4' || item.filetype=='avi' || item.filetype=='flv'" width="200"
+                  height="125" preload="none" controls controlsList="nodownload">
+                  <source [src]="sanitizer.bypassSecurityTrustUrl(item.message)" type="video/mp4">
+                  <source [src]="sanitizer.bypassSecurityTrustUrl(item.message)" type="video/ogg">
+
+                </video>
+
+                <!-- <div> -->
+                <span class="time" text-right style="margin-top: 8px;">
+                  {{item.timestamp | date: "hh:mm a"  }}
+                </span>
+                <!-- </div> -->
+
+              </div>
+              <!-- Event message -->
+              <div *ngIf="item.filetype=='event'">
+                <p class="chatbubble-left">
+                  <span style="margin: 0 auto;display: block;">
+                    <ion-icon class="calendar" name="calendar"></ion-icon> <br>
+                  </span>
+                  <span class="eventmsg">{{ item.message }}</span><br>
+                  <!-- <span *ngIf="item.status == '1'" class="invitebtn"
+                  (click)="save_event(item.message,item)">Accept & Save</span> -->
+                  <ion-button expand="block" (click)="save_event(item.message,item)">Accept
+                  </ion-button>
+                </p>
+              </div>
+
+            </div>
+          </ion-col>
+
+
+          <!--me-->
+          <ion-col offset="3" size="9"
+            *ngIf="item.sentby === currentUser&& item.filetype!='title' &&  item.filetype!='video text' && item.filetype!='call text'"
+            class="message my-message">
+            <div class="chatbubble-right">
+
+              <div
+                *ngIf="item.forwardmsg!=null && item.forwardmsg!='null' && item.forwardmsg!='undefined' && item.forwardmsg!=currentUser"
+                style="    font-size: 13px;
+              font-style: italic;
+          color: lightgray;">
+                <i class="fa fa-share" aria-hidden="true"></i> Forwarded
+
+              </div>
+
+              <!--Reply Tag text-->
+              <span
+                *ngIf="item.tagmessage!='' && item.tagmessage!=null && item.tagmessage!='undefined' && item.tagmessage!='null'"
+                style="border-bottom: 1px solid black;color: #E91E63;">
+
+                <span *ngIf="item.tagfiletype=='text'" style="white-space: pre-line !important;" text-wrap
+                  [innerHTML]="item.tagmessage | highlightPipe:searchTerms"></span>
+
+                <!--Image file-->
+                <div
+                  *ngIf="item.tagfiletype=='image' || item.tagfiletype=='JPG' || item.tagfiletype=='jpg' || item.tagfiletype=='png' || item.tagfiletype=='PNG' || item.tagfiletype=='JPEG' || item.tagfiletype=='jpeg' || item.tagfiletype=='gif' || item.tagfiletype=='GIF'">
+                  <img src="{{item.tagmessage}}">
+                </div>
+                <!--Any document-->
+
+                <div>
+
+                  <a
+                    *ngIf="item.tagfiletype=='dotx' ||item.tagfiletype=='doc' || item.tagfiletype=='dot' || item.tagfiletype=='docx'">
+
+                    <p text-wrap class="fileexten">{{item.tagfileextension}}</p>
+                  </a>
+                  <a
+                    *ngIf="item.tagfiletype=='xls' || item.tagfiletype=='xlsx' || item.tagfiletype=='xlt'|| item.tagfiletype=='xla' ">
+
+                    <p text-wrap class="fileexten">{{item.tagfileextension}}</p>
+                  </a>
+
+                  <a *ngIf="item.tagfiletype=='txt' || item.tagfiletype=='TXT'">
+
+                    <p text-wrap class="fileexten">{{item.tagfileextension}}</p>
+                  </a>
+
+                  <a *ngIf="item.tagfiletype=='pdf' || item.tagfiletype=='PDF'">
+
+                    <p text-wrap class="fileexten">{{item.tagfileextension}}</p>
+                  </a>
+                  <a
+                    *ngIf="item.tagfiletype=='pps' || item.tagfiletype=='ppa'  || item.tagfiletype=='pptx' || item.tagfiletype=='potx'">
+
+                    <p text-wrap class="fileexten">{{item.tagfileextension}}</p>
+                  </a>
+
+                </div>
+
+
+                <!--Location-->
+                <a *ngIf="item.Taglocation=='true'">
+                  <img
+                    src="{{getMap}}center={{item.latitude}}&zoom=18&size=300x300&markers=color:red%7Clabel:S%7C{{item.latitude}}">
+                </a>
+
+                <!--Audio file-->
+                <audio *ngIf="item.tagfiletype=='audio' || item.tagfiletype=='mp3'" controls controlsList="nodownload">
+                  <source [src]="sanitizer.bypassSecurityTrustUrl(item.tagmessage)" type="audio/ogg">
+                  <source [src]="sanitizer.bypassSecurityTrustUrl(item.tagmessage)" type="audio/mpeg">
+                </audio>
+                <!--Video file-->
+                <video *ngIf="item.tagfiletype=='mp4' || item.tagfiletype=='avi' || item.tagfiletype=='flv'" width="200"
+                  preload="none" height="125" controls controlsList="nodownload">
+                  <source [src]="sanitizer.bypassSecurityTrustUrl(item.tagmessage)" type="video/mp4">
+                  <source [src]="sanitizer.bypassSecurityTrustUrl(item.tagmessage)" type="video/ogg">
+                </video>
+
+                <p class="stable singleTick">{{item.tagtime | date: "hh:mm a"  }} </p>
+                <h6></h6>
+              </span>
+
+
+              <!-- {{ item.message }} -->
+
+              <div>
+                <!-- <span *ngIf="item.filetype=='text' && item.message!='' && hidetext(item)"
+                  style="white-space: pre-line !important;color: black;" text-wrap
+                  [innerHTML]="item.message | highlightPipe:searchTerms"></span> -->
+
+                <div *ngIf="!item.showMore">
+                  <span *ngIf="item.filetype=='text' && item.message!='' && hidetext(item)"
+                    style="white-space: pre-line !important;color: black;" text-wrap
+                    [innerHTML]="trimString(item.message,200)| highlightPipe:searchTerms"></span>
+                </div>
+                <div *ngIf="item.showMore">
+
+                  <span *ngIf="item.filetype=='text' && item.message!='' && hidetext(item)"
+                    style="white-space: pre-line !important;color: black;" text-wrap
+                    [innerHTML]="item.message| highlightPipe:searchTerms"></span>
+
+                </div>
+                <a *ngIf="item.message.length>200  && item.filetype=='text'" style="color: #039be5;cursor: pointer;font-size: 14px;"
+                  (click)="item.showMore = !item.showMore">Read <span [innerHtml]="item.showMore ? 'less' : 'More'">
+                  </span>
+                </a>
+
+                <!-- <span *ngIf="item.filetype=='text' && item.message!='' && hidetext(item)"
+                  style="white-space: pre-line !important;color: black;" text-wrap >{{item.message}}</span>
+                -->
+                <!-- 
+              <div *ngIf="item.filetype=='text' && item.message!=''">
+                <span *ngIf="hidetext(item)" [hidden]="selfdestruct"
+                  style="white-space: pre-line !important;color: black;margin-right: 15px;" text-wrap
+                  [innerHTML]="item.message"></span>
+              </div> -->
+
+
+                <img style="object-fit: cover;width:245px;height:245px;margin-bottom: 10px;"
+                  [src]="sanitizer.bypassSecurityTrustUrl(item.message)"
+                  *ngIf="item.filetype=='image' || item.filetype=='JPG' || item.filetype=='jpg' || item.filetype=='png' || item.filetype=='PNG' || item.filetype=='JPEG' || item.filetype=='jpeg' || item.filetype=='gif' || item.filetype=='GIF'"
+                  (click)="ZoomFile(item.message)">
+
+                <!--Doc format-->
+                <a *ngIf="item.filetype=='dotx' ||item.filetype=='doc' || item.filetype=='dot' || item.filetype=='docx'"
+                  (click)="getPermission(item.message,item.fileextension,item.filetype)">
+                  <img style="height:35px;" src="assets/imgs/wordDoc.png">
+                  <h6 text-wrap class="fileexten">{{item.fileextension}}</h6>
+                </a>
+
+                <!--XLS format-->
+                <div
+                  *ngIf="item.filetype=='xls' || item.filetype=='xlsx' || item.filetype=='xlt'|| item.filetype=='xla'"
+                  (click)="getPermission(item.message,item.fileextension,item.filetype)">
+                  <img style="height:35px;" src="assets/imgs/excelDoc.png">
+                  <h6 text-wrap class="fileexten">{{item.fileextension}}</h6>
+                </div>
+                <!--PDF Format-->
+                <div *ngIf="item.filetype=='pdf' || item.filetype=='PDF'"
+                  (click)="getPermission(item.message,item.fileextension,item.filetype)">
+                  <img style="height:35px;" src="assets/imgs/pdfDoc.png">
+                  <h6 text-wrap class="fileexten">{{item.fileextension}}</h6>
+                </div>
+
+                <!--Txt Format-->
+                <a *ngIf="item.filetype=='txt' || item.filetype=='TXT'"
+                  (click)="getPermission(item.message,item.fileextension,item.filetype)">
+                  <img style="height:35px;" src="assets/imgs/txtFormat.png">
+                  <span text-wrap class="fileexten">{{item.fileextension}}</span>
+                </a>
+
+                <!--PPT format-->
+                <a *ngIf="item.filetype=='pps' || item.filetype=='ppa'  || item.filetype=='pptx' || item.filetype=='potx'"
+                  (click)="getPermission(item.message,item.fileextension,item.filetype)">
+                  <img style="height:35px;" src="assets/imgs/ppt.png">
+                  <h6 text-wrap class="fileexten">{{item.fileextension}}</h6>
+                </a>
+
+                <!--google location file-->
+                <a *ngIf="item.filetype=='map'" (click)='Mappopover(item.message)'>
+                  <img style="width: 100% !important;"
+                    src="{{getMap}}center={{latitude}}&zoom=18&size=300x300&markers=color:red%7Clabel:S%7C{{item.message}}">
+                </a>
+                <p *ngIf="item.filetype=='map live'" (click)="liveLocation(item.message,item.timestamp,item.sentby)">
+                  <img style="width: 100% !important;"
+                    src="{{getMap}}center={{latitude}}&zoom=18&size=300x300&markers=color:red%7Clabel:S%7C{{item.message}}">
+                </p>
+
+                <p *ngIf="item.livelocation!='undefined' &&(item.livelocation=='false' || item.livelocation==false)"
+                  style="font-size: 14px;text-align:center;height: 0px;color: #b3aea8;">Live Location Ended</p>
+
+                <div *ngIf="item.filetype=='map live' && (item.livelocation=='true' || item.livelocation==true)">
+                  <button style="width: 50%;min-height: 25px;border-radius: 10px;background: #ff656c !important;
+                color: white;" ion-button full (click)="stopLocation(item.message,item.timestamp)">
+                    <ion-icon style="position: relative;
+                  top: 3px;" name="stop-circle-outline"></ion-icon>&nbsp;Stop Live
+                  </button>
+
+                  <button *ngIf="item.filetype=='map live'" style="    border-radius: 10px;
+                width: 47%;min-height: 25px;
+                background: #0c84b4 !important;
+                color: white;
+                margin-left: 5px;" ion-button full (click)="liveLocation(item.message,item.timestamp,item.sentby)">
+                    <ion-icon style="position: relative;
+                  top: 3px;" name="navigate-outline"></ion-icon>&nbsp;View Live
+                  </button>
+                  <br />
+                </div>
+
+
+                <!-- <br/> -->
+
+                <!--Audio file-->
+                <audio *ngIf="item.filetype=='audio' || item.filetype=='mp3'" controls controlsList="nodownload">
+
+                  <source [src]="sanitizer.bypassSecurityTrustUrl(item.message)" type="audio/ogg">
+                  <source [src]="sanitizer.bypassSecurityTrustUrl(item.message)" type="audio/mpeg">
+                </audio>
+
+
+                <!--Video file-->
+                <video *ngIf="item.filetype=='mp4' || item.filetype=='avi' || item.filetype=='flv'" width="200"
+                  height="125" preload="none" controls controlsList="nodownload">
+                  <source [src]="sanitizer.bypassSecurityTrustUrl(item.message)" type="video/mp4">
+                  <source [src]="sanitizer.bypassSecurityTrustUrl(item.message)" type="video/ogg">
+
+                </video>
+
+
+                <!--Document's-->
+                <span class="time" text-right style="float:right;right:7px;"
+                  *ngIf="item.status=='0' && item.message!='' && (item.filetype=='pptx' || item.filetype=='ppa' || item.filetype=='pps' || item.filetype=='xlsx' || item.filetype=='xls' || item.filetype=='PDF' || item.filetype=='pdf' || item.filetype=='dotx' ||item.filetype=='doc' || item.filetype=='dot' || item.filetype=='docx')"
+                  class="stable singleTick">{{item.timestamp | date: "hh:mm a"  }}<span style="color: gray !important;">
+                    <span data-testid="msg-time" aria-label=" Pending " data-icon="msg-time" class="">
+                      <img style="width:10px;height:10px;" src="assets/imgs/graybullet.png">
+                      <img style="width:10px;height:10px;" src="assets/imgs/graybullet.png">
+                    </span>
+
+                  </span></span>
+                <span class="time" text-right style="float:right;right:7px;"
+                  *ngIf=" item.filetype!='video text' && item.filetype!='call text' && item.status=='1' && item.message!='' && (item.filetype=='pptx' || item.filetype=='ppa' || item.filetype=='pps' || item.filetype=='xlsx' || item.filetype=='xls' || item.filetype=='PDF' || item.filetype=='pdf' || item.filetype=='dotx' ||item.filetype=='doc' || item.filetype=='dot' || item.filetype=='docx')"
+                  class="stable singleTick">{{item.timestamp | date: "hh:mm a"  }} <span
+                    style="color: gray !important;">
+                    <span data-testid="msg-check" aria-label=" Sent " data-icon="msg-check" class="">
+                      <img style="width:10px;height:10px;" src="assets/imgs/blackbullet.png">
+                      <img style="width:10px;height:10px;" src="assets/imgs/blackbullet.png">
+                    </span>
+                  </span></span>
+                <span class="time" text-right style="float:right;right:7px;"
+                  *ngIf=" item.filetype!='video text' && item.filetype!='call text' && item.status=='2' && item.message!='' && (item.filetype=='pptx' || item.filetype=='ppa' || item.filetype=='pps' || item.filetype=='xlsx' || item.filetype=='xls' || item.filetype=='PDF' || item.filetype=='pdf' || item.filetype=='dotx' ||item.filetype=='doc' || item.filetype=='dot' || item.filetype=='docx')"
+                  class="stable singleTick">{{item.timestamp | date: "hh:mm a"  }} <span
+                    style="color: #4fc3f7 !important; ">
+                    <span data-testid="msg-dblcheck" aria-label=" Read " data-icon="msg-dblcheck" class="_3xkAl">
+                      <img style="width:10px;height:10px;" src="assets/imgs/greenbullet.png">
+                      <img style="width:10px;height:10px;" src="assets/imgs/greenbullet.png">
+                    </span>
+
+                  </span></span>
+
+                <!--Chat status tick-->
+
+                <span class="time" text-right style="float:right;right:7px;"
+                  *ngIf="item.filetype!='video text' && item.filetype!='call text' && item.status=='0' && item.message!='' && (item.filetype=='mp4' || item.filetype=='avi' || item.filetype=='flv' || item.filetype=='mp3' || item.filetype=='audio' || item.location=='true' || item.filetype=='image' || item.filetype=='JPG' || item.filetype=='jpg' || item.filetype=='png' || item.filetype=='PNG' || item.filetype=='JPEG' || item.filetype=='jpeg' || item.filetype=='gif' || item.filetype=='GIF')"
+                  class="stable singleTick">{{item.timestamp | date: "hh:mm a"  }} <span
+                    style="color: gray !important;">
+                    <span data-testid="msg-time" aria-label=" Pending " data-icon="msg-time" class="">
+                      <img style="width:10px;height:10px;" src="assets/imgs/graybullet.png">
+                      <img style="width:10px;height:10px;" src="assets/imgs/graybullet.png">
+                    </span>
+
+                  </span></span>
+                <span class="time" text-right style="float:right;right:7px;"
+                  *ngIf="item.filetype!='video text' && item.filetype!='call text' && item.status=='1' && item.message!='' && (item.filetype=='mp4' || item.filetype=='avi' || item.filetype=='flv' ||  item.filetype=='mp3' || item.filetype=='audio' || item.location=='true' || item.filetype=='image' || item.filetype=='JPG' || item.filetype=='jpg' || item.filetype=='png' || item.filetype=='PNG' || item.filetype=='JPEG' || item.filetype=='jpeg' || item.filetype=='gif' || item.filetype=='GIF')"
+                  class="stable singleTick">{{item.timestamp | date: "hh:mm a"  }} <span
+                    style="color: gray !important;">
+                    <span data-testid="msg-check" aria-label=" Sent " data-icon="msg-check" class="">
+                      <img style="width:10px;height:10px;" src="assets/imgs/blackbullet.png">
+                      <img style="width:10px;height:10px;" src="assets/imgs/blackbullet.png">
+                    </span>
+                  </span></span>
+                <span class="time" text-right style="float:right;right:7px;"
+                  *ngIf="item.filetype!='video text' && item.filetype!='call text' && item.status=='2' && item.message!='' && (item.filetype=='mp4' || item.filetype=='avi' || item.filetype=='flv' || item.filetype=='mp3' || item.filetype=='audio' || item.location=='true'  || item.filetype=='image' || item.filetype=='JPG' || item.filetype=='jpg' || item.filetype=='png' || item.filetype=='PNG' || item.filetype=='JPEG' || item.filetype=='jpeg' || item.filetype=='gif' || item.filetype=='GIF')"
+                  class="stable singleTick">{{item.timestamp | date: "hh:mm a"  }} <span
+                    style="color: #4fc3f7 !important; ">
+                    <span data-testid="msg-dblcheck" aria-label=" Read " data-icon="msg-dblcheck" class="_3xkAl">
+                      <img style="width:10px;height:10px;" src="assets/imgs/greenbullet.png">
+                      <img style="width:10px;height:10px;" src="assets/imgs/greenbullet.png">
+                    </span>
+                  </span></span>
+
+                <!--Text ststus-->
+                <span class="time" text-right style="float:right"
+                  *ngIf="item.filetype!='video text' && item.filetype!='call text' && item.status=='0' && item.message!='' && item.filetype!='mp4' && item.filetype!='avi' && item.filetype!='flv' && item.filetype!='mp3'  && item.filetype!='audio' && item.location!='true' && item.filetype!='pptx' && item.filetype!='ppa' && item.filetype!='pps' && item.filetype!='xlsx' && item.filetype!='xls' && item.filetype!='PDF' && item.filetype!='pdf' && item.filetype!='dotx' && item.filetype!='doc' && item.filetype!='dot' && item.filetype!='docx' && item.filetype!='image' && item.filetype!='JPG' && item.filetype!='jpg' && item.filetype!='png' && item.filetype!='PNG' && item.filetype!='JPEG' && item.filetype!='jpeg' && item.filetype!='gif' && item.filetype!='GIF'"
+                  class="stable singleTick">{{item.timestamp | date: "hh:mm a"  }}
+                  <span data-testid="msg-time" aria-label=" Pending " data-icon="msg-time" class="">
+                    <img style="width:10px;height:10px;" src="assets/imgs/graybullet.png">
+                    <img style="width:10px;height:10px;" src="assets/imgs/graybullet.png">
+                  </span>
+                </span>
+                <span text-right
+                  *ngIf="item.filetype!='video text' && item.filetype!='call text' && item.status=='1' && item.message!='' && item.filetype!='mp4' && item.filetype!='avi' && item.filetype!='flv' &&  item.filetype!='mp3' && item.filetype!='audio' && item.location!='true' && item.filetype!='pptx' && item.filetype!='ppa' && item.filetype!='pps' && item.filetype!='xlsx' && item.filetype!='xls' && item.filetype!='PDF' && item.filetype!='pdf' && item.filetype!='dotx' && item.filetype!='doc' && item.filetype!='dot' && item.filetype!='docx' && item.filetype!='image' && item.filetype!='JPG' && item.filetype!='jpg' && item.filetype!='png' && item.filetype!='PNG' && item.filetype!='JPEG' && item.filetype!='jpeg' && item.filetype!='gif' && item.filetype!='GIF'"
+                  class="stable singleTick">{{item.timestamp | date: "hh:mm a"  }} <span
+                    style="color: gray !important;">
+                    <span data-testid="msg-check" aria-label=" Sent " data-icon="msg-check" class="">
+                      <img style="width:10px;height:10px;" src="assets/imgs/blackbullet.png">
+                      <img style="width:10px;height:10px;" src="assets/imgs/blackbullet.png">
+                    </span>
+                  </span></span>
+                <span class="time" text-right style="float:right"
+                  *ngIf="item.filetype!='video text' && item.filetype!='call text' && item.status=='2' && item.message!='' && item.filetype!='mp4' && item.filetype!='avi' && item.filetype!='flv' && item.filetype!='mp3' && item.filetype!='audio' && item.location!='true' && item.filetype!='pptx' && item.filetype!='ppa' && item.filetype!='pps' && item.filetype!='xlsx' && item.filetype!='xls' && item.filetype!='PDF' && item.filetype!='pdf' && item.filetype!='dotx' && item.filetype!='doc' && item.filetype!='dot' && item.filetype!='docx' && item.filetype!='image' && item.filetype!='JPG' && item.filetype!='jpg' && item.filetype!='png' && item.filetype!='PNG' && item.filetype!='JPEG' && item.filetype!='jpeg' && item.filetype!='gif' && item.filetype!='GIF'"
+                  class="stable singleTick">{{item.timestamp | date: "hh:mm a"  }}
+                  <span style="color: #4fc3f7 !important;">
+                    <span data-testid="msg-dblcheck" aria-label=" Read " data-icon="msg-dblcheck" class="_3xkAl">
+                      <img style="width:10px;height:10px;" src="assets/imgs/greenbullet.png">
+                      <img style="width:10px;height:10px;" src="assets/imgs/greenbullet.png">
+                    </span>
+
+                  </span></span>
+              </div>
+              <!-- Event Message -->
+              <div *ngIf="item.filetype=='event'">
+                <p class="chatbubble-right">
+                  <span style="margin: 0 auto;display: block;">
+                    <ion-icon class="calendar" name="calendar"></ion-icon> <br>
+                  </span>
+                  <span class="eventmsg">{{item.message}}</span>
+                  <!-- <span class="time" text-right><br>{{ item.timestamp | date:'shortTime' }}</span> -->
+                </p>
+              </div>
+
+            </div>
+          </ion-col>
+
+
+          <!-- <ion-col size="9" *ngIf="item.sentby !== currentUser&&item.filetype=='event'" class="message my-message">
+          <p class="chatbubble-left">
+            <span style="margin: 0 auto;display: block;">
+              <ion-icon class="calendar" name="calendar"></ion-icon> <br>
+            </span>
+            <span class="eventmsg">{{ item.message }}</span><br> <span class="invitebtn"
+              (click)="save_event(item.message)">Accept & Save</span><span class="time"
+              text-right><br>{{ item.timestamp | date:'shortTime' }}</span></p>
+        </ion-col>
+
+        <ion-col offset="3" size="9" *ngIf="item.sentby === currentUser&&item.filetype=='event'"
+          style="margin-left: 0 !important;" class="message my-message">
+          <p class="chatbubble-right">
+            <span style="margin: 0 auto;display: block;">
+              <ion-icon class="calendar" name="calendar"></ion-icon> <br>
+            </span>
+            <span class="eventmsg">{{ item.message }}</span> <span class="time"
+              text-right><br>{{ item.timestamp | date:'shortTime' }}</span></p>
+        </ion-col> -->
+        </ion-row>
+      </div>
+    </ion-grid>
+  </div>
+
+</ion-content>
+
+<ion-footer *ngIf="!buddyblocked && !myblocked" class="ion-no-border">
+
+  <div [class.show]="titleStyle" *ngIf="showpop=='true'" class="popoverdiv">
+    <ion-row style="float: right;" (click)="closePopover()">
+      <ion-icon name="close-circle" class="popclose"></ion-icon>
+
+      <!-- <img src="assets/closeIcon.png" style="height:22px;position:absolute;right:57px;" (click)="closePopover()"> -->
+    </ion-row>
+    <ion-row>
+      <ion-col col-3>
+        <!-- <img src='assets/imgs/camera.png' *ngIf="!mobileicon" class="chatpop" (click)="webcamera()" /> -->
+        <img src='assets/imgs/camera.png' class="chatpop" (click)="sendPicCamera()" />
+        <!-- sendPicCamera  takeCamera-->
+      </ion-col>
+      <ion-col col-3>
+        <img src='assets/imgs/gallery.jpg' class="chatpop" (click)="addGallery()" />
+
+      </ion-col>
+      <ion-col col-3>
+        <!-- 
+        
+        <input type="file" id="imgupload" *ngIf="!mobileicon" multiple style="display:none"
+          (change)="onUploadChange($event)" />
+        <img src='assets/imgs/document.png' *ngIf="!mobileicon" class="chatpop"
+          onclick="$('#imgupload').trigger('click'); return false;" /> -->
+
+
+
+        <img src='assets/imgs/document.png' class="chatpop" (click)="galleryPicMsg()" />
+
+        <!-- sendPicMsg galleryPicMsg -->
+      </ion-col>
+      <ion-col col-3>
+        <img src='assets/imgs/location.png' class="chatpop" (click)="addMarker()" />
+
+      </ion-col>
+    </ion-row>
+  </div>
+  <div [class.show]="maptitleStyle" *ngIf="mapshowpop=='true'" class="popoverdiv">
+    <ion-row style="float: right;">
+      <ion-icon name="close-circle" class="popclose" (click)="closePopover()"></ion-icon>
+    </ion-row>
+    <ion-row>
+      <ion-col col-6>
+        <ion-icon name="logo-chrome" style="font-size: 2.2em !important" (click)="openLocation(0)" class="chatpop">
+        </ion-icon>
+      </ion-col>
+
+      <ion-col col-6>
+        <img src='assets/imgs/location.png' class="chatpop" (click)="openLocation(1)" />
+      </ion-col>
+    </ion-row>
+  </div>
+  <div *ngIf="addmessagehide" class="tagdiv">
+    <div class="tagmessage">
+      <ion-icon name="close" class="loginicon" (click)="Replycancel()"></ion-icon>
+      <div
+        *ngIf="filetype!='image' && filetype!='JPG' && filetype!='jpg' && filetype!='png' && filetype!='PNG' && filetype!='JPEG' && filetype!='jpeg' && filetype!='gif' && filetype!='GIF' && filetype!='application' && filetype!='mp4' && filetype!='avi' && filetype!='flv' && location!=true && latitude!=true && filetype!='dotx' && fileTyp!='doc' && filetype!='dot' && filetype!='docx' && filetype!='xls' && filetype!='xlsx' && filetype!='xlt' && filetype!='xla' && filetype!='pdf' && filetype!='PDF' && filetype!='pps' && filetype!='ppa'  && filetype!='pptx' && filetype!='potx'"
+        text-wrap>
+        {{tagmessage}}</div>
+
+      <img style="width:75px;height: 64px;" [src]="sanitizer.bypassSecurityTrustUrl(tagmessage)"
+        *ngIf="filetype=='image' || filetype=='JPG' || filetype=='jpg' || filetype=='png' || filetype=='PNG' || filetype=='JPEG' || filetype=='jpeg' || filetype=='gif' || filetype=='GIF'">
+
+      <!--Any document-->
+      <img style="height:30px" src="assets/Fileticon.png" *ngIf="filetype=='application'">
+
+
+      <!--Location-->
+      <a *ngIf="filetype=='map'" (click)='Mappopover(message)'>
+        <img src="{{getMap}}center={{latitude}}&zoom=18&size=300x300&markers=color:red%7Clabel:S%7C{{message}}">
+      </a>
+
+      <!--Audio file-->
+      <audio *ngIf="filetype=='audio' ||  filetype=='mp3'" controls>
+        <source [src]="sanitizer.bypassSecurityTrustUrl(tagmessage)" type="audio/ogg">
+        <source [src]="sanitizer.bypassSecurityTrustUrl(tagmessage)" type="audio/mpeg">
+      </audio>
+      <!--Video file-->
+      <video *ngIf="filetype=='mp4' || filetype=='avi' || filetype=='flv'" width="100" height="70" controls
+        preload="none">
+        <source [src]="sanitizer.bypassSecurityTrustUrl(tagmessage)" type="video/mp4">
+        <source [src]="sanitizer.bypassSecurityTrustUrl(tagmessage)" type="video/ogg">
+      </video>
+
+      <span
+        *ngIf="filetype=='dotx' || filetype=='doc' || filetype=='dot' || filetype=='docx' || filetype=='xls' || filetype=='xlsx' || filetype=='xlt'|| filetype=='xla'|| filetype=='pdf' || filetype=='PDF' || filetype=='pps' || filetype=='ppa'  || filetype=='pptx' || filetype=='potx' || filetype=='txt' || filetype=='TXT'"
+        text-wrap>{{tagfileextension}}</span>
+
+
+
+      <!-- <div class="stable">{{tagtime | date: "hh:mm a"  }}</div> -->
+    </div>
+  </div>
+  <ion-toolbar>
+
+    <div *ngIf="!newMsgBtn">
+      <div class="messagediv" style="height:50px;width:98%">
+
+        <ion-grid>
+          <ion-row>
+            <ion-col size="2">
+              <img end *ngIf="!newMsgBtn" src="assets/audio_icon.gif"
+                style="height: 45px;float: left;margin-top: -9px;">
+
+            </ion-col>
+            <ion-col size="6">
+              <label class="listening">Listening...</label>
+
+            </ion-col>
+            <ion-col size="2">
+              <button class="voicecancel" end *ngIf="!newMsgBtn" ion-button clear icon-only item-right
+                (click)="cancelRecord()">
+                Cancel
+              </button>
+            </ion-col>
+            <ion-col size="2">
+
+              <button class="voicesend" end *ngIf="!newMsgBtn" ion-button clear icon-only item-right
+                (click)="stopRecord()">
+                Send
+              </button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+
+
+
+
+      </div>
+
+    </div>
+
+    <div style="display: flex;">
+
+      <div class="messagediv" *ngIf="newMsgBtn">
+        <!-- <ion-icon class="attachementicon" *ngIf="newMsgBtn" (click)="popover()" name="attach"></ion-icon> -->
+        <img src="assets/smile.png" class="attachementicon" width="30px" (click)="switchEmojiPicker()">
+
+
+
+        <textarea #chat_input *ngIf="newMsgBtn" rows="1" (focus)="updateScroll()" [(ngModel)]="message"
+          placeholder="Type a message" minlength="1" msd-elastic="" (ngModelChange)="StyleChange(message)"
+          class="ng-valid-minlength ng-valid-maxlength ng-dirty ng-touched ng-empty ng-invalid ng-invalid-required"
+          style="color: black;
+          border-radius: 29px;
+          display: initial;
+          overflow: auto;
+          overflow-wrap: break-word;
+          padding: 9px 32px 0px 25px;
+          margin-left: 6.3%;
+          background-color: white;
+          height: 45px;
+          /* margin-top: -4px; */
+          width: 87% !important;
+          border: none;
+          max-height: 130px;"></textarea>
+        <!-- <button style="margin-top: 9px;right: 8%;" ion-button clear icon-only item-right (click)="switchEmojiPicker()">
+          <ion-icon name="md-happy"></ion-icon> -->
+        <!-- <img *ngIf="!message" src="assets/attach.png"  width="30px" (click)="popover()"> -->
+
+
+        <svg *ngIf="!newmessage" (click)="speechTotext()" style="    margin-top: 7px;
+        height: 35px !important;
+border: 0;
+width: auto;    background: white;
+margin-right: 10px;" width="30px" class="AWbbyf" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
+          height="24">
+          <path fill="none" d="M0 0h24v24H0z"></path>
+          <path fill="#4285F4"
+            d="M12 15c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v7c0 1.66 1.34 3 3 3z"></path>
+          <path fill="#34A853" d="M11 18.92h2V22h-2z"></path>
+          <path fill="#F4B400" d="M7 12H5c0 1.93.78 3.68 2.05 4.95l1.41-1.41C7.56 14.63 7 13.38 7 12z"></path>
+          <path fill="#EA4335"
+            d="M12 17c-1.38 0-2.63-.56-3.54-1.47l-1.41 1.41C8.32 18.21 10.07 19 12.01 19c3.87 0 6.98-3.14 6.98-7h-2c0 2.76-2.23 5-4.99 5z">
+          </path>
+        </svg>
+
+        <img *ngIf="!newmessage" src="assets/attach.png" style=" margin-top: 9px;   height: 30px !important;
+            border: 0;
+            width: auto;    background: white;
+            margin-right: 10px;" width="30px" (click)="popover()">
+
+        <!-- </button> -->
+      </div>
+      <ion-buttons end *ngIf="newMsgBtn" style="margin: auto;">
+
+
+        <img *ngIf="message" src="assets/sent.png" style="height: 40px !important;
+        margin-right: 5px;" width="30px" [disabled]="message ==undefined || message == ''" (click)="sendMessage()">
+
+        <!-- <button *ngIf="message" style="margin-bottom:11px;" ion-button clear icon-only item-right
+          [disabled]="message ==undefined || message == ''" (click)="sendMessage()">
+          <ion-icon name="ios-send" ios="ios-send" md="md-send" color="primary"></ion-icon>
+          <br />
+          <p class="gobtn">GO</p>
+        </button> -->
+        <img *ngIf="!message" src="assets/mic.png" style="height: 40px !important;margin-right: 5px;" width="30px"
+          (click)="startRecord()">
+
+        <!-- <button  *ngIf="!message"
+            style="margin-top: 12px;margin-left: 6px;width: 31px;background: #4b86c6;border-radius: 50%;" ion-button clear
+            icon-only item-right (click)="startRecord()">
+            <ion-icon style="color: white;font-size: 22px;" name="mic" color="primary"></ion-icon>
+          </button> -->
+
+      </ion-buttons>
+
+    </div>
+
+
+    <div *ngIf="showEmojiPicker==true">
+      <emoji-picker></emoji-picker>
+    </div>
+  </ion-toolbar>
+
+</ion-footer>
+
+<!-- <ion-footer> -->
+<div>
+
+</div>
+
+<!-- <div>
+    <h3>Max rows <input [(ngModel)]="maxRows"/></h3>
+    
+</div> -->
+<!-- </ion-footer> -->

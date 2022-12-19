@@ -1,0 +1,143 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Search Media</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closemodal()">
+        <ion-icon name="close" title="Close" style="color:red"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-row *ngIf="!singlechat">
+    <ion-col>
+      <label>Sender Name</label><br />
+      <select class="form-control" [(ngModel)]="username">
+        <option value="0">Select</option>
+        <option *ngFor="let item of groupmembers">{{item.username}}</option>
+      </select>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col col-xl-3>
+      <label>From Date</label>
+      <input class="form-control" [(ngModel)]="FDate" placeholder="Date" type="date" [max]="todayDate"
+        [ngModelOptions]="{timezone:'UTC'}">
+    </ion-col>
+    <ion-col col-xl-3>
+      <label>To Date</label>
+      <input class="form-control" [(ngModel)]="ToDate" placeholder="Date" type="date" [max]="todayDate"
+        [ngModelOptions]="{timezone:'UTC'}">
+
+    </ion-col>
+    <ion-col col-xl-4>
+      <label>File Name</label>
+      <input class="form-control" (keyup)="searchFile($event)" [(ngModel)]="filename" placeholder="File name">
+
+    </ion-col>
+    <ion-col col-xl-1>
+
+      <img style="height:30px;margin-top: 35px;" src="assets/filterIcon.png" (click)="filterDate()">
+    </ion-col>
+  </ion-row>
+  <hr />
+
+
+  <ion-list style="margin-top: -35px;">
+    <div class="notask" *ngIf="allMsg.length==0">
+      <p style="text-align: center;">No document(s) Found</p>
+    </div>
+    <ion-item *ngFor="let item of allMsg" style="border-bottom: 1px solid lightgrey;">
+  
+      <ion-label>
+
+        <div
+          *ngIf="item.filetype=='image' || item.filetype=='JPG' || item.filetype=='jpg' || item.filetype=='png' || item.filetype=='PNG' || item.filetype=='JPEG' || item.filetype=='jpeg' || item.filetype=='gif' || item.filetype=='GIF'">
+          <img style="width: 90px;height:100px;" [src]="sanitizer.bypassSecurityTrustUrl(item.message)"
+            *ngIf="item.filetype=='image' || item.filetype=='JPG' || item.filetype=='jpg' || item.filetype=='png' || item.filetype=='PNG' || item.filetype=='JPEG' || item.filetype=='jpeg' || item.filetype=='gif' || item.filetype=='GIF'"
+            (click)="ZoomFile(item.message)">
+          <br />
+          <a href="{{item.message}}" target="_new">View</a>
+        </div>
+
+
+        <!--Any document-->
+        <!-- <img style="height:30px" src="assets/Fileticon.png" *ngIf="item.filetype=='application'"
+          (click)="FileopenBrowser(item.message,item.fileextension)"> -->
+
+        <!--Doc format-->
+        <a *ngIf="item.filetype=='dotx' ||item.filetype=='doc' || item.filetype=='dot' || item.filetype=='docx'"
+          (click)="getPermission(item.message,item.fileextension,item.filetype)">
+          <img style="height:35px;" src="assets/imgs/wordDoc.png">
+          <span text-wrap><b><br />Name : </b>{{item.fileextension}} </span>
+          <!-- <hr> -->
+        </a>
+
+        <!--XLS format-->
+        <a *ngIf="item.filetype=='xls' || item.filetype=='xlsx' || item.filetype=='xlt'|| item.filetype=='xla'"
+          (click)="getPermission(item.message,item.fileextension,item.filetype)">
+          <img style="height:35px;" src="assets/imgs/excelDoc.png">
+          <span text-wrap><b><br />Name : </b>{{item.fileextension}} </span>
+          <!-- <hr> -->
+        </a>
+        <!--PDF Format-->
+        <a *ngIf="item.filetype=='pdf' || item.filetype=='PDF'"
+          (click)="getPermission(item.message,item.fileextension,item.filetype)">
+          <img style="height:35px;" src="assets/imgs/pdfDoc.png">
+          <span text-wrap><b><br />Name : </b>{{item.fileextension}} </span>
+          <!-- <hr> -->
+        </a>
+
+        <!--Txt Format-->
+        <a *ngIf="item.filetype=='txt' || item.filetype=='TXT'"
+          (click)="getPermission(item.message,item.fileextension,item.filetype)">
+          <img style="height:35px;" src="assets/imgs/txtFormat.png">
+          <span text-wrap><b><br />Name : </b>{{item.fileextension}} </span>
+          <!-- <hr> -->
+        </a>
+
+        <!--PPT format-->
+        <a *ngIf="item.filetype=='pps' || item.filetype=='ppa'  || item.filetype=='pptx' || item.filetype=='potx'"
+          (click)="getPermission(item.message,item.fileextension,item.filetype)">
+          <img style="height:35px;" src="assets/imgs/ppt.png">
+          <span text-wrap><b><br />Name : </b>{{item.fileextension}} </span>
+          <!-- <hr> -->
+        </a>
+
+
+        <!--Audio file-->
+        <div
+          *ngIf="item.filetype=='audio' || item.filetype=='mp3' || item.filetype=='mp4' || item.filetype=='avi' || item.filetype=='flv'">
+          <audio *ngIf="item.filetype=='audio' || item.filetype=='mp3'" controls controlsList="nodownload">
+            <source [src]="sanitizer.bypassSecurityTrustUrl(item.message)" type="audio/ogg">
+            <source [src]="sanitizer.bypassSecurityTrustUrl(item.message)" type="audio/mpeg">
+          </audio>
+
+          <!--Video file-->
+          <video *ngIf="item.filetype=='mp4' || item.filetype=='avi' || item.filetype=='flv'" width="200" height="125"
+            preload="none" controls controlsList="nodownload">
+            <source [src]="sanitizer.bypassSecurityTrustUrl(item.message)" type="video/mp4">
+            <source [src]="sanitizer.bypassSecurityTrustUrl(item.message)" type="video/ogg">
+          </video>
+          <br />
+        </div>
+
+
+        <!--Video file-->
+
+        <span style="color: #0c84b4;"
+          *ngIf="item.filetype=='image' || item.filetype=='JPG' || item.filetype=='jpg' || item.filetype=='png' || item.filetype=='PNG' || item.filetype=='JPEG' || item.filetype=='jpeg' || item.filetype=='gif' || item.filetype=='GIF'">
+          <!-- <br /> -->
+          <b>Name : </b>{{item.fileextension}}
+        </span>
+        <span *ngIf="!singlechat" style="color: #0c84b4;"><br /><b>Sender Name : </b>{{item.name}}</span>
+        <span style="color: #0c84b4;"><br /><b>Date : </b>{{item.timestamp | date: "dd-MM-yyyy"}}</span>
+
+        <span style="color: #0c84b4;"><b> Time : </b>{{item.timestamp | date: "hh:mm a"}}</span>
+      </ion-label>
+
+    </ion-item>
+  </ion-list>
+</ion-content>

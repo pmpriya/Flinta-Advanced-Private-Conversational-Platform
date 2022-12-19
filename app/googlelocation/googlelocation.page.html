@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{Ttitle}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" title="Close" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-grid>
+    <!-- <ion-row style="float: right;">
+      <img src="assets/closeIcon.png" style="height:30px" (click)="dismiss()" >
+    </ion-row> -->
+    <ion-row>
+
+      <div #map id="map" style="width: 100%;height: 100%;margin: 0 auto;position: absolute !important;"></div>
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>
+<!-- <ion-footer>
+  <ion-navbar color="hcolor">
+    <ion-title>Current location</ion-title>
+    <ion-icon name="send" class="ionicon" (click)="sendLocation()" float-right></ion-icon>
+  </ion-navbar>
+</ion-footer> -->
+
+<ion-footer style=" height: 50px !important;" *ngIf="locationValue==false">
+
+  <ion-row style=" height: 50px !important;">
+    <button style="width: 100%;background: #ff656c !important;
+    color: white;" ion-button full (click)="sendLocation()">
+      <ion-icon style="position: relative;
+      top: 3px;" name="navigate-outline"></ion-icon>&nbsp;Current Location
+    </button>
+     <!-- <button style="width: 50%;background: green !important;
+    color: white;" ion-button full (click)="sendLiveLocation()">
+      <ion-icon style="position: relative;
+      top: 3px;" name="navigate-outline"></ion-icon>&nbsp;Live Location
+    </button> -->
+  </ion-row>
+
+</ion-footer>
