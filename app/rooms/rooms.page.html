@@ -1,0 +1,54 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>GROUPS</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+
+<ion-content>
+  <ion-list>
+      <!-- <ion-item>GROUPS</ion-item> -->
+      <ion-item><a  class="item item-icon-left" style="color:#98a2a7" (click)="addgroup()">
+          <ion-icon class="ionicon" name="add-circle" style="position: relative;
+          top: 10px;font-size: 30px !important;" ></ion-icon>
+          <span>Create New Group</span>
+        </a></ion-item>
+     
+    </ion-list>
+  
+<ion-list no-lines>
+    <!-- <div class="group1" *ngIf="allmygroups!=null && allmygroups.length!=0">
+        <span>Joined groups</span>
+      </div> -->
+      <!-- <hr *ngIf="allmygroups!=null && allmygroups.length!=0" class="grphr"/> -->
+
+  <ion-item *ngFor="let item of allmygroups" style="border-bottom: 1px solid lightgrey;border-style: initial;"  (click)="openchat(item)">
+    <ion-avatar item-left style=" width: 45px !important;height: 45px !important;">
+  
+      <img *ngIf="item.groupimage=='default'" src="assets/imgs/groupIcon.png">
+      <img *ngIf="item.groupimage!='default'" [src]="sanitizer.bypassSecurityTrustUrl(item.groupimage)">
+    </ion-avatar>
+   
+    <ion-label style="margin-left: 10px;">
+      <h4 style="text-transform: capitalize;
+   
+    font-size: 14px;
+    font-weight: bold; margin-bottom: -4px;" [ngStyle]="{'color': colorCode}">&nbsp;{{item.groupname}}</h4>
+   <span style="text-transform: capitalize;
+   color: gray;
+   font-size: 12px;
+   ">&nbsp;{{item.groupcreated}} &nbsp; {{item.timestamp | date: "MMM d, y" | lowercase}}</span> </ion-label>
+
+    
+  </ion-item>
+  <!-- <ion-list-header class="group">
+      Open groups
+    </ion-list-header>
+    <ion-item *ngFor="let item of opengrps">
+        <ion-avatar item-left>
+          <img src="{{item.groupimage}}">
+        </ion-avatar>
+        <h3 (click)="openchat(item)" style="text-transform :capitalize">{{item.groupName}}</h3>
+      </ion-item> -->
+</ion-list>
+</ion-content>
