@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Minutes of Meeting</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+   </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+  <ion-item>
+    <ion-label><b>Meeting Called By</b></ion-label> 
+    <ion-input [(ngModel)]="calledby"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Agenda</ion-label> 
+    <ion-input [(ngModel)]="agenda"></ion-input>
+  </ion-item>
+
+  <ion-item (click)="opencontacts()">
+    <ion-label>Attendees</ion-label> 
+    <ion-input [(ngModel)]="tot_attendes" placeholder="Please Select"></ion-input>
+    <!-- <ion-select multiple="true" [(ngModel)]="attendes">
+      <div *ngFor="let contact of contacts">
+      <ion-select-option *ngIf="contact.userstatus=='A'&&contact.username!='undefined'&&contact.username!=''" value={{contact.username}}>{{contact.username}}</ion-select-option>
+    </div>
+    </ion-select> -->
+    <!-- <ionic-selectable
+    [(ngModel)]="port"
+    [items]="contacts"
+    itemValueField="id"
+    itemTextField="name"
+    [canSearch]="true"
+    (onChange)="portChange($event)">
+  </ionic-selectable> -->
+  </ion-item>
+
+
+  <ion-item>
+    <ion-label  style="margin-top: 10px;">Discussion</ion-label> 
+    <ion-textarea [(ngModel)]="discussion"></ion-textarea>
+  </ion-item>
+
+    <ion-item>
+    <ion-label style="margin-top: 10px;">Conclusion</ion-label> 
+    <ion-textarea [(ngModel)]="conclusion"></ion-textarea>
+  </ion-item>
+  </ion-list>
+
+  <p style="margin: 15px;">Action Plan1: <span *ngIf="employee_details.length=='0'">Please add Employee and POA</span></p>
+
+      <ion-card *ngFor="let att of employee_details; let i = index">
+        <h3 style="text-align: center;margin:0;">Employee {{i+1}} <ion-icon name="close-circle" (click)="remove_app(i)" style="font-size: 25px;vertical-align: middle;float: right;position: absolute;right: 10px;"></ion-icon></h3>
+
+        <!-- <ion-label class="card-label">Employee Name</ion-label>
+        <ion-input style="border: 1px solid var(--ion-card-title-color);border-radius: 7px;text-align: left;" type="text" [(ngModel)]="employee_details[i].name"></ion-input> -->
+        <!-- <ion-item> -->
+          <ion-label>Employee Name</ion-label> 
+          <ion-select [(ngModel)]="employee_details[i].name" style="border: 1px solid var(--ion-card-title-color);border-radius: 7px;text-align: left;">
+            <div *ngFor="let contact of contact_res">
+            <ion-select-option *ngIf="contact.userstatus=='A'&&contact.username!='undefined'&&contact.username!=''" value={{contact.username}}>{{contact.username}}</ion-select-option>
+          </div>
+          </ion-select>
+        <!-- </ion-item> -->
+        <ion-label class="card-label">Assigned Task/Action</ion-label>
+        <ion-textarea style="border: 1px solid var(--ion-card-title-color);border-radius: 7px;text-align: left;" autoGrow=true [(ngModel)]="employee_details[i].task"></ion-textarea>
+        <ion-label class="card-label">Deadline</ion-label>
+        <ion-datetime style="border: 1px solid var(--ion-card-title-color);border-radius: 7px;text-align: left;" displayFormat="D MMM YYYY H:mm" [(ngModel)]="employee_details[i].deadline"></ion-datetime>
+        <!-- <input style="width: 100%;padding: 5px;" type="datetime-local"/> -->
+      </ion-card>
+      <div style="text-align: center;margin: 10px 0;">
+        <ion-button (click)="add_employee()">Add</ion-button>
+        <ion-button color="success" (click)="save()" [disabled]="employee_details.length==0">Save & Share</ion-button>
+      </div>   
+      
+      <!-- <div [innerHtml]="groupmom"></div> -->
+  
+
+</ion-content>

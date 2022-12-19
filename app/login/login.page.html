@@ -1,0 +1,159 @@
+<ion-content style="--background: url('assets/imgs/flinta-background.png') no-repeat center center / cover;">
+ 
+ 
+
+  <div class="background-image"></div>
+  <!-- <div class="outer">
+    <div class="middle">
+      <div class="inner">
+        <img src="assets/imgs/flintalogo.png" class="animate__animated animate__bounceInDown logoimg">
+
+        <div style="border-radius: 15px;padding: 7px;">
+          <ion-list>
+
+
+            <ion-item>
+              <ion-label style="color:white;">Mobile No &nbsp;&nbsp;</ion-label>
+              <ion-input style="text-align: center;" type="tel" maxlength=15 [(ngModel)]="phone"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label style="color:white;">Password &nbsp;&nbsp;</ion-label>
+              <ion-input style="text-align: center;" type="password" [(ngModel)]="password"></ion-input>
+            </ion-item>
+
+          </ion-list>
+          <div style="text-align: center;">
+            <ion-button class="loginbtn"
+              [disabled]="phone ==undefined || phone == '' || phone==null || password==null || password=='' || password==null"
+              (click)="login()">Login</ion-button>
+          </div>
+        </div>
+        <div style="display: block;width: 100%;margin: 15px 0;">
+          <p style="color: #24243e;
+  font-weight: 700;
+  float:left;
+  padding: 5px;font-size: 12px;" (click)="forgotPassword()">Forgot Password? </p></div>
+      
+
+        </div>
+      </div>
+    </div> -->
+
+  <div class="container h-100">
+    <div class="d-flex justify-content-center h-100">
+      <div class="user_card">
+        <div class="d-flex justify-content-center">
+
+          <label class="titleTxt">Flinta</label>
+
+          <!-- <img src="assets/imgs/flintalogo.png" class="animate__animated animate__bounceInDown logoimg"> -->
+        </div>
+        <div class="d-flex justify-content-center form_container">
+          <form method="POST" action="" style="    width: 250px;">
+            <!-- <div class="apptxt">Flinta</div> -->
+
+            <div class="input-group mb-3">
+              <div class="input-group-append">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+              </div>
+              <input type="text" name="Mobile number" autocomplete="off" autocorrect="off" [(ngModel)]="phone" placeholder="Mobile Number"
+                class="form-control">
+            </div>
+            <div class="input-group mb-2">
+              <div class="input-group-append">
+                <span class="input-group-text"><i class="fas fa-key" ></i></span>
+              </div>
+              <input type="{{showValue.type}}" autocomplete="off" autocorrect="off" [(ngModel)]="password" name="password" placeholder="Password"
+                class="form-control">
+              <!-- <span class="input-group-btn">
+                    <button class="btn btn-primary" type="button" data-toggle-password>Show</button>
+                </span> -->
+
+              <span class="input-group-text" style=" border-bottom-right-radius: 8px  !important;cursor: pointer;
+                  border-top-right-radius: 8px  !important;" *ngIf="checkFlag==true" (click)="showPassword()"><i
+                  class="fa fa-eye" title="Hide Password" aria-hidden="true"></i></span>
+              <span class="input-group-text" style=" border-bottom-right-radius: 8px  !important;cursor: pointer;
+                  border-top-right-radius: 8px  !important;" *ngIf="checkFlag==false" (click)="showPassword()"><i
+                  class="fa fa-eye-slash"  title="Show Password" aria-hidden="true"></i></span>
+
+            </div>
+            <!-- <div *ngIf="phone!=undefined && phone!=''&&password!=undefined && password!=''">
+         
+
+              <label class="remeber" style="position: relative;  color: black;
+              cursor: pointer;font-weight: 100;"><span>Remember Password?</span>
+                <input type="checkbox"  name="Remember" [(ngModel)]="Remember" checked="true" (change)="remeberpassword(Remember)">
+                <span class="checkmark"></span>
+              </label>
+           
+            </div> -->
+            <div class="d-flex justify-content-center mt-3 login_container">
+              <input class="btn login_btn" type="submit"
+                
+                (click)="login()" value="Login">
+            </div>
+          </form>
+
+        </div>
+
+        <div class="mt-4">
+          <div class="d-flex justify-content-center links" style="color: white;cursor: pointer;">
+            <span style="color:black" (click)="forgotPassword()">Forgot Password?</span> <a
+              href="{% url 'register' %}" class="ml-2"></a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<!-- <ion-content>
+  <div class="background-image"></div>
+  <div class="outer">
+    <div class="middle">
+      <div class="inner">  
+    <h1 style="padding: 10px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    border-radius: 30px;
+    background-image: linear-gradient(to right, #24243e, #212341, #1d2144, #182047, #121f4a, #121f4a, #121f4a, #121f4a, #182047, #1d2144, #212341, #24243e);">Interview Process</h1>
+    <div style="background-color: #24243e;padding: 25px;border-radius: 15px;">
+    <ion-list>
+  
+    <ion-label>Mobile No</ion-label>
+    <ion-item>
+      
+      <ion-input type="tel" maxlength=10 [(ngModel)]="mob"></ion-input>
+    </ion-item>
+
+    <ion-label>Password</ion-label>
+    <ion-item>
+      
+      <ion-input type="password"  [(ngModel)]="pwd"></ion-input>
+    </ion-item>
+  
+  </ion-list>
+
+  <ion-button style="margin: 0 auto;display: table;" *ngIf="role=='1'" (click)="login()">Login</ion-button>
+</div>
+<div style="display: inline-block;width: 100%;">
+  <p style="    color: white;
+  font-weight: 700;
+  float: left;
+  background: #24243ebd;
+  padding: 10px;" (click)="forgot_pwd()">Forgot Password?</p>
+  <p style="    color: white;
+  font-weight: 700;
+  float: right;
+  background: #24243ebd;
+  padding: 10px;" (click)="move2register()">New User? <span style="font-weight: 700;margin: 0 5px;">REGISTER</span></p>
+</div>
+ 
+  </div>
+  </div>
+  </div>
+
+</ion-content> -->

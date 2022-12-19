@@ -1,0 +1,48 @@
+#container {
+  text-align: center;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+// ion-tab-button[aria-selected=true] {
+//   box-shadow: 0 2px 0 0 #f5f5f7  inset;
+
+// }
+.profileimage{
+  border-radius: 50%;
+  // overflow: hidden;
+  width: 42px !important;
+  height: 42px !important;
+  left: 5px;
+  /* margin-top: 10px; */
+  position: relative;
+  top: 5px;
+  // right: 112px;
+}
+#container strong {
+  font-size: 20px;
+  line-height: 26px;
+}
+
+#container p {
+  font-size: 16px;
+  line-height: 22px;
+
+  color: #8c8c8c;
+
+  margin: 0;
+}
+
+#container a {
+  text-decoration: none;
+}
+
+
+// ion-tabbar { --color-seleted: var(--ion-tabbar-text-color-active); }
+.swipe-area {
+  height:100%;
+  width:100%;
+}

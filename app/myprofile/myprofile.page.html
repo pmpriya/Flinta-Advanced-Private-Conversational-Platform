@@ -1,0 +1,55 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>myprofile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+</ion-content> -->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button (click)="stoptone()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div *ngIf="buddydetails!=undefined" class="profile-image" style="text-align: center;margin-top: 10px;">
+    <img style="border-color: gainsboro;"  [src]="sanitizer.bypassSecurityTrustUrl(buddydetails.photourl)" *ngIf="buddydetails.photourl!='default'" class="webprofile" (click)="updateImage()">
+    <img style="border-color: gainsboro;" src="assets/imgs/chatterplace.png" *ngIf="buddydetails.photourl=='default'" class="webprofile" (click)="updateImage()">
+
+  </div>
+
+  <ion-list *ngIf="buddydetails!=undefined" style="    font-size: 14px;">
+    <!-- <ion-item>
+      <div (click)="updateImage()">
+        <img *ngIf="buddydetails.photourl!='default'" [src]="sanitizer.bypassSecurityTrustUrl(buddydetails.photourl)" class="profileimage1">
+        <img class="profileimage1" *ngIf="buddydetails.photourl=='default'" src="assets/imgs/chatterplace.png">
+      </div>
+
+    </ion-item> -->
+    <ion-item ><span style="{{colorCode}}" >Employee Code :&nbsp; </span> {{buddydetails.employee}}</ion-item>
+    <ion-item style="text-transform: capitalize;"><span style="{{colorCode}}"  >Name :&nbsp; </span> {{buddydetails.username}}</ion-item>
+    <ion-item> <span style="{{colorCode}}">Gender : &nbsp;</span> {{buddydetails.gender}}</ion-item>
+    <ion-item> <span style="{{colorCode}}">Mobile : &nbsp;</span> {{buddydetails.mobile}}</ion-item>
+    <ion-item> <span style="{{colorCode}}">Email :&nbsp; </span> {{buddydetails.email}}</ion-item>
+    <ion-item> <span style="{{colorCode}}">Designation : &nbsp;</span> {{buddydetails.designation}}</ion-item>
+    <ion-item> <span style="{{colorCode}}">Department : &nbsp;</span> {{buddydetails.department}}</ion-item>
+    <ion-item><span style="{{colorCode}}">Branch Name :&nbsp; </span> {{buddydetails.branchname}}</ion-item>
+    <ion-item>
+      <label style="{{colorCode}}">Change Tone :</label>
+      <ion-select [(ngModel)]="calltone" style="text-transform: capitalize;"  (ionChange)="playtone(calltone)"  interface="popover">
+          <ion-select-option *ngFor="let tone of tones;let i = index;" [value]="tone.value">{{tone.name}}</ion-select-option>      
+      </ion-select>
+    </ion-item>
+
+    <!-- <ion-item>Menu Item</ion-item>
+    <ion-item>Menu Item</ion-item>
+    <ion-item>Menu Item</ion-item> -->
+  </ion-list>
+</ion-content>

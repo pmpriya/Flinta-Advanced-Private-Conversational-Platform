@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <span style="float: left;
+    margin-top: 7px;color:#fff"> Group members </span>
+
+
+    <img *ngIf="contactsSelected.length!=0" style="float: right;display:-webkit-inline-box !important;margin-right: 10px; 
+height: 36px;" src="assets/call.png" (click)="audioCall()" />
+
+    <img *ngIf="contactsSelected.length!=0" style="float: right;display:-webkit-inline-box !important;margin-right: 10px; 
+height: 32px;;" src="assets/video.png" (click)="videoCall()" />
+
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-list no-lines>
+    <!-- <ion-list-header>
+      Group Members
+    </ion-list-header> -->
+    <ion-item *ngFor="let item of groupmembers" style="border-bottom: 1px solid lightgrey;">
+      <!-- <ion-avatar item-left>
+        <img *ngIf="item.photourl!='default'" src={{item.photourl}}>
+        <img *ngIf="item.photourl=='default'" src='assets/imgs/chatterplace.png'>
+
+      </ion-avatar> -->
+
+      <ion-avatar slot="start">
+        <img *ngIf="item.photourl!='default'" src={{item.photourl}}>
+        <img *ngIf="item.photourl=='default'" src='assets/imgs/chatterplace.png'>
+      </ion-avatar>
+      <ion-label>
+        <h2 style="text-transform: capitalize" [ngStyle]="{'color': colorCode}">{{item.username}}</h2>
+        <h3 style="text-transform: capitalize;font-size: 12px;">{{item.designation}}</h3>
+        <p *ngIf="group_call ==false && item.owner!='undefined'"
+          style="color: lightgreen;float: right;margin-top: -19px;">Group Admin</p>
+      </ion-label>
+
+      <ion-checkbox  *ngIf="group_call ==true" color="dark" id={{item.uid}} (ionChange)="change(item)" [(ngModel)]="item.selected" item-right>
+      </ion-checkbox>
+
+      <ion-icon name="close-circle" *ngIf="group_call ==false && item.owner=='undefined' && owener==true" class="removeicon"
+        style="margin-top: -19px;" (click)="Deletemember(item)"></ion-icon>
+
+      <!-- <ion-icon name="trash"></ion-icon> -->
+
+    </ion-item>
+  </ion-list>
+
+</ion-content>

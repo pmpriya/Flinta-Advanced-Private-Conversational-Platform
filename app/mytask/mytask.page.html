@@ -1,0 +1,163 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>My Task</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item>
+    <ion-label>Filter by Date</ion-label>
+    <input style="padding: 8px;border-radius: 5px;margin: 5px 0;width: 100%;background-color: transparent;"
+    [(ngModel)]="date" type="date" (change)="getmytask()"/>
+  </ion-item>
+
+  <ion-searchbar [(ngModel)]="searchstring" showCancelButton="never" placeholder="Search by task" animated="true">
+  </ion-searchbar>
+  <h4 style="text-align: center;">{{day | date:'mediumDate'}} Task</h4>
+  <h5 style="text-align:center;margin:10px;" *ngIf="notask">You Don't Have any Task Now!</h5>
+  <!-- <ion-list-header style="text-align: center;" *ngIf="mytask!=null && mytask.length==0 ">
+          <ion-row style="width: 100%;"> -->
+
+  <!-- <div style="width: 100%;text-align: center;" *ngIf="mytask!=null && mytask.length==0 ">
+                  <h6> No data found
+                  </h6>
+              </div> -->
+
+  <!-- </ion-row>
+      </ion-list-header> -->
+
+  <ion-card *ngFor="let task of mytask| filter:searchstring;let i = index;">
+    <ion-card-header>
+      <ion-card-title>Task</ion-card-title>
+      <ion-card-subtitle style="margin:10px 15px;font-size: medium;text-transform: capitalize;">{{task.message}}
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <!-- <ion-row>
+        <div>
+          <h4>Task: <br> <span>{{taskmsg}}</span></h4>
+        </div>
+      </ion-row> -->
+        <ion-row>
+          <ion-col size="6">
+           
+            <label style="color: #0496d0;"> Assigned By :</label>
+
+          </ion-col>
+          <ion-col size="6" style="text-align: center;">
+            {{task.assigned_by}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            
+            <label style="color: #0496d0;"> Assigned To :</label>
+
+          </ion-col>
+          <ion-col size="6" style="text-align: center;">
+            {{task.assigned_to}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            
+            <label style="color: #0496d0;"> Assigned On:</label>
+
+          </ion-col>
+          <ion-col size="6" style="text-align: center;">
+            {{task.assigned_at | date: "dd-MM-yyyy"}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <label style="color: #0496d0;">   Estimated From Date:</label>
+
+          </ion-col>
+          <ion-col size="6" style="text-align: center;">
+            {{task.from_date | date: "dd-MM-yyyy"}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+          
+            <label style="color: #0496d0;">   Estimated Due Date:</label>
+
+          </ion-col>
+          <ion-col size="6" style="text-align: center;">
+            {{task.due_at | date: "dd-MM-yyyy"}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            
+            <label style="color: #0496d0;"> Estimated Hours:</label>
+
+          </ion-col>
+          <ion-col size="6" style="text-align: center;">
+            {{task.esti_time}}
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="task.taskstatus=='4'||task.taskstatus=='5'">
+          <ion-col size="6">
+            <label style="color: #0496d0;"> Completed Date:</label>
+
+          </ion-col>
+          <ion-col size="6" style="text-align: center;">
+            {{task.completed_at | date: "dd-MM-yyyy"}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <label style="color: #0496d0;">Status</label>
+          </ion-col>
+          <ion-col *ngIf="!clicked[i]" size="6" style="display: flex;text-align: center;justify-content: center;">
+            <p *ngIf="task.taskstatus=='1'" class="stattext" style="color: darkviolet;">Assigned</p>
+            <p *ngIf="task.taskstatus=='2'" class="stattext" style="color: red;">Reopened</p>
+            <p *ngIf="task.taskstatus=='3'" class="stattext" style="color: orange;">Accepted</p>
+            <p *ngIf="task.taskstatus=='4'" class="stattext" style="color: blue;">Resolved</p>
+            <p *ngIf="task.taskstatus=='5'" class="stattext" style="color: green;">Closed</p>
+            <ion-icon name="pencil" (click)="edit(i)"></ion-icon>
+          </ion-col>
+         
+          <ion-col *ngIf="clicked[i]" size="6" style="display: flex;text-align: center;justify-content: center;">
+            <ion-select placeholder="Select" *ngIf="clicked[i]" [(ngModel)]="status">
+              <div *ngFor="let status of task.statusopt">
+                <ion-select-option value="{{status.value}}">{{status.name}}</ion-select-option>
+              </div>
+            </ion-select>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+
+          <label style="color: #0496d0;" *ngIf="task.taskstatus!='1' && clicked[i] ||((status=='4' || task.taskstatus=='4' || task.taskstatus=='5'))">Description</label>
+          </ion-col>
+          <!-- <ion-textarea type="text"  [(ngModel)]="emp_description"   value={{task.emp_description}}></ion-textarea> -->
+          <ion-col size="12" style="text-align: center;">
+
+          <textarea *ngIf=" task.taskstatus!='1' && (clicked[i] ||((status=='4' || task.taskstatus=='4' || task.taskstatus=='5')))"  style="padding: 8px;border-radius: 5px;margin: 5px 0;width: 100%;background-color: transparent;" 
+          maxlength="500" id="desk{{i}}" value={{task.emp_description}} name="esti_time" type="text"></textarea>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="clicked[i] && task.taskstatus!='5'">
+          <ion-col>
+            <div style="text-align: end;">
+              <ion-button color="success" (click)="save(task,i,task.taskstatus)">Save</ion-button>
+            </div>
+          </ion-col>
+          <ion-col>
+            <div style="text-align: left;">
+              <ion-button color="danger" (click)="cancel(task,i)">Cancel</ion-button>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

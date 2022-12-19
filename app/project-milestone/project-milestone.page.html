@@ -1,0 +1,142 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Project Milestone</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+
+    <button class="btn" expand="block" (click)="toggle_create()"><i class="fa fa-plus-circle" aria-hidden="true"></i>
+      &nbsp; Create Milestone</button>
+    <button class="btn" expand="block" (click)="toggle_view()"><i class="fa fa-eye" aria-hidden="true"></i>
+      &nbsp; View Milestone</button>
+  </div>
+
+
+  <div style="margin: 10px; background: #dadada;
+  border-radius: 8px;" *ngIf="tcreate==true">
+    <!-- <ion-icon name="close-circle" (click)="toggle_view()" class="close"></ion-icon> -->
+    <!-- <div style="padding: 5px;">  -->
+
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div style="text-align: left;color: #0c84b4;">Project Name &nbsp;<span style="color: red;">*</span></div>
+          <ion-input type="text" [(ngModel)]="projectname" ></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div style="text-align: left;color: #0c84b4;">Project ID &nbsp;<span style="color: red;">*</span></div>
+          <ion-input type="text" [(ngModel)]="projectid" ></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <div *ngFor="let att of milestones; let i = index">
+        <ion-row>
+          <ion-col size="10">
+            <div style="text-align: left;color: #0c84b4;">Module Name {{i+1}}&nbsp;<span style="color: red;">*</span></div>
+            <ion-input type="text" [(ngModel)]="milestones[i].text"></ion-input>
+            <!-- placeholder="Module {{i+1}}" -->
+          </ion-col>
+          <ion-col size="2">
+            <ion-button style="margin-top: 25px;" color="danger" (click)="remove_milestone(i)">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div style="text-align: left;color: #0c84b4;">Description &nbsp;<span style="color: red;">*</span></div>
+            <ion-textarea style="text-align: left;"  [(ngModel)]="milestones[i].description">
+            </ion-textarea>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col=6>
+            <div style="text-align: left;color: #0c84b4;">Start Date &nbsp;<span style="color: red;">*</span></div>
+            <ion-datetime displayFormat="D MMM YYYY" placeholder="" [(ngModel)]="milestones[i].startdate">
+            </ion-datetime>
+          </ion-col>
+          <ion-col col=6>
+            <div style="text-align: left;color: #0c84b4;">End Date &nbsp;<span style="color: red;">*</span></div>
+            <ion-datetime displayFormat="D MMM YYYY" placeholder="" [(ngModel)]="milestones[i].deadline">
+            </ion-datetime>
+          </ion-col>
+        </ion-row>
+      </div>
+
+
+      <!-- </ion-row> -->
+
+      <!-- <ion-row>
+        
+      </ion-row>
+      <ion-row>
+      </ion-row> -->
+
+    </ion-grid>
+    <div style="text-align: center;padding: 10px 0;">
+      <ion-button (click)="add_milestone()"> Add</ion-button>
+      <ion-button color="success" (click)="submit()">Submit</ion-button>
+    </div>
+    <!-- </div> -->
+  </div>
+
+  <div *ngIf="tcreate!=undefined &&tcreate==false">
+
+    <ion-item>
+      <ion-label>Choose Project</ion-label>
+      <span *ngIf="allprojects.length==0">No Data found</span>
+      <ion-select placeholder="Select" *ngIf="allprojects.length!=0" (ionChange)="getprojectstat()" [(ngModel)]="project">
+        <div *ngFor="let project of allprojects">
+          <ion-select-option *ngIf="project.projectname!='undefined'||project.projectid!='undefined'"
+            value="{{project.projectid}}">{{project.projectname}}</ion-select-option>
+        </div>
+      </ion-select>
+    </ion-item>
+    <div class="ion-padding">
+      <div *ngIf="projectstat&&projectstat.length>0">
+        <ion-progress-bar style="height: 20px;border-radius: 10px;" color="secondary" [value]="progress">
+        </ion-progress-bar>
+        <p style="text-align: end;font-weight: 600;margin: 10px 0;"> Completion Status : <span
+            [style.color]="progress*100==100?'green':'red'">{{progress*100}} %</span></p>
+            
+      </div>
+      <ion-grid *ngIf="projectstat&&projectstat.length>0">
+        <ion-row class="titlerow">
+          <ion-col size="2">No</ion-col>
+          <ion-col size="10">Milestone</ion-col>
+          <!-- <ion-col size="4">Status</ion-col> -->
+        </ion-row>
+        <ion-row class="gridbody" *ngFor="let status of projectstat;let i = index;" (click)="showstatus(i)">
+          <ion-col size="2">{{i+1}}</ion-col>
+          <ion-col size="10" style="text-align: left;text-transform: capitalize;">{{status.milestone}} <br>
+            <span style="font-size: 12px;" *ngIf="status.description!='undefined'"><span style="color: #0c84b4;">Description: </span> {{status.description}}</span> <br>
+            <span style="font-size: 12px;" *ngIf="status.description!='undefined'"><span style="color: #0c84b4;">From Date:</span> {{status.startdate1}}</span><br>
+            <span style="font-size: 12px;" *ngIf="status.description!='undefined'"><span style="color: #0c84b4;">To Date:</span> {{status.duedate1}}</span><br>
+            <span style="font-size: 12px;" *ngIf="status.description!='undefined'"><span style="color: #0c84b4;">Days :</span> {{status.Difference_In_Days}}</span>
+
+            
+
+          </ion-col>
+          <ion-col  class="statcol" [style.background-color]="status.status==1?'#ffc300':'lime'" style="margin-left: 55px;">
+            <!-- *ngIf="statusview[i]" -->
+
+            <ion-select placeholder="Select" [disabled]="admin!='1'" style="height: 40px;"
+              (ionChange)="changestat(status,status.status,value)" [(ngModel)]="status.status">
+              <!-- <ion-select-option value="0">Not Started</ion-select-option> -->
+              <ion-select-option value="1">In Progress</ion-select-option>
+              <ion-select-option value="2">Completed</ion-select-option>
+            </ion-select>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+
+</ion-content>

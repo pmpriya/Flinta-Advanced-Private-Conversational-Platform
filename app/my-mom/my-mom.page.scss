@@ -1,0 +1,32 @@
+ion-input{
+    text-align: end;
+}
+
+ion-textarea{
+    // border: 1px solid grey;
+    // border-radius: 7px;
+    
+    text-align: end;
+}
+
+.card-label{
+    display: block;
+    margin: 10px 0px;
+}
+
+ion-card{
+    padding: 15px 15px 30px;
+    border-radius: 15px;
+    // color: white;
+    color:var(--ion-card-title-color);
+    background-color:var(--ion-card-bgcolor);
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 6px 0 rgba(0, 0, 0, 0.16);
+}
+.select-text {
+    flex: 1 1 0%;
+    min-width: 16px;
+    font-size: inherit;
+    text-overflow: ellipsis;
+    white-space: pre-line !important;
+    overflow: hidden;
+}

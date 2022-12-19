@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>My Shelf</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar [(ngModel)]="searchstring" (input)="searchuser($event)" placeholder="Search" (ionClear)="onCancel($event)" showCancelButton="never" placeholder="Search" animated="true">
+  </ion-searchbar>
+  <h5 style="text-align:center;margin:20px;" *ngIf="nofiles">You Don't Have any File to Show!</h5>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <h5><i class="fa fa-file" style="color: yellow;" aria-hidden="true"></i> &nbsp;Sent Files:<br></h5>
+        <p style="text-align: center;" *ngIf="sent_files.length=='0'">No Sent Files!</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <!-- <ion-col   > -->
+        <div style="width: 100%;" *ngFor="let file of sent_files;let i = index;" (click)="openaction(file)">
+          <img style="    float: left;height: 40px;" src='../../assets/imgs/wordDoc.png'
+          *ngIf="file.filetype=='doc'||file.filetype=='docx'">
+        <img style="    float: left;height: 40px;" src='../../assets/imgs/txtFormat.png' *ngIf="file.filetype=='txt'">
+        <img style="    float: left;height: 40px;" src='../../assets/imgs/pdfDoc.png' *ngIf="file.filetype=='pdf'">
+        <img style="    float: left;height: 40px;" src='../../assets/imgs/ppt.png' *ngIf="file.filetype=='ppt'||file.filetype=='pptx'">
+        <img style="    float: left;height: 40px;" src='../../assets/imgs/excelDoc.png'
+          *ngIf="file.filetype=='xls'||file.filetype=='xlsx'">
+        <img style="    float: left;height: 40px;" *ngIf="file.filetype=='jpg'||file.filetype=='png'||file.filetype=='bmp'"
+          src="{{file.message}}">
+        <p style="text-align: center;font-size: 14px;margin-top: 15px;
+        float: left;">{{file.fileextension}} &nbsp;({{file.timestamp | date: "MMM d, y" | lowercase}})</p>
+
+        </div>
+  
+      <!-- </ion-col> -->
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <h5><i class="fa fa-file" style="color: yellow;" aria-hidden="true"></i> &nbsp;Received Files:<br></h5>
+        <p style="text-align: center;" *ngIf="received_files.length==0">No Received Files!</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <!-- <ion-col  *ngFor="let file of received_files;let i = index;" (click)="openaction(file)"> -->
+        
+ 
+
+        <div style="width: 100%;" *ngFor="let file of received_files;let i = index;" (click)="openaction(file)">
+          <img style="    float: left;height: 40px;" src='../../assets/imgs/wordDoc.png'
+          *ngIf="file.filetype=='doc'||file.filetype=='docx'">
+        <img style="    float: left;height: 40px;" src='../../assets/imgs/txtFormat.png' *ngIf="file.filetype=='txt'">
+        <img style="    float: left;height: 40px;" src='../../assets/imgs/pdfDoc.png' *ngIf="file.filetype=='pdf'">
+        <img style="    float: left;height: 40px;" src='../../assets/imgs/ppt.png' *ngIf="file.filetype=='ppt'||file.filetype=='pptx'">
+        <img style="    float: left;height: 40px;" src='../../assets/imgs/excelDoc.png'
+          *ngIf="file.filetype=='xls'||file.filetype=='xlsx'">
+        <img style="    float: left;height: 40px;" *ngIf="file.filetype=='jpg'||file.filetype=='png'||file.filetype=='bmp'"
+          src="{{file.message}}">
+        <p style="text-align: center;font-size: 14px;margin-top: 15px;
+        float: left;">{{file.fileextension}} &nbsp;({{file.timestamp | date: "MMM d, y" | lowercase}})</p>
+
+        </div>
+
+      <!-- </ion-col> -->
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

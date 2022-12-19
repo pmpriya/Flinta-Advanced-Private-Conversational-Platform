@@ -1,0 +1,137 @@
+.load:hover img{
+    opacity: 0.6;
+}
+
+.load:hover .uploadclose {
+     display: block;  
+}
+.uploadclose{
+    float: right;
+    display: none;
+    font-size: 20px;
+    color: white;
+    // position: absolute;
+    right: 8px;
+}
+.document{
+    height: 35px;
+    position: relative;
+    right: 24px;
+    top: 28px;
+}
+.uploadimage{
+align-items: center;
+box-sizing: border-box;
+display: -ms-flexbox;
+display: flex;
+-ms-flex: 0 0 120px;
+flex: 0 0 120px;
+-ms-flex-pack: center;
+justify-content: center;
+background-color: #d8d8d8;
+padding: 9px 20px;
+}
+.load{
+margin-right: 8px;
+flex: 1;
+height: 100px;
+max-width: 100px;
+overflow: hidden;
+position: relative;
+cursor: pointer;
+  opacity: 1; 
+display: block; 
+transform-origin: 50% 50% 0px; 
+ transform: scaleX(1) scaleY(1);
+ border:4px solid #fff; 
+}
+.load1{
+  right: 1px; 
+transition: right 75ms ease-out, top 75ms ease-out; 
+
+position: absolute;
+top: 1px; 
+z-index: 100; 
+}
+[role="button"] {
+cursor: pointer;
+}
+.addfile{
+opacity: 1;
+display: block;
+transform-origin: 50% 50% 0px;
+transform: scaleX(1) scaleY(1);
+display: flex !important;
+align-items: center;
+box-sizing: border-box;
+color: #00a5f4;
+-ms-flex-direction: column;
+flex-direction: column;
+-ms-flex: 0 0 100px;
+flex: 0 0 100px;
+font-size: 12px;
+height: 100px;
+-ms-flex-pack: center;
+justify-content: center;
+max-width: 100px;
+text-transform: uppercase;
+transition: transform 75ms ease-out;
+background-color: #fff;
+padding: 10px;
+top: 1px;
+position: relative;
+}
+.file{
+margin-top: 5px;
+text-align: center;
+}
+.capturesendicon{
+color: #fff;
+font-size: 30px;
+position: relative;
+margin: 0 auto;
+text-align: center;
+// left: 7px; 
+}
+.capturesend{
+  border-radius: 50%;
+  background-color: #09e85e;
+  position: relative;
+  padding: 10px;
+  width: 50px;
+  height: 50px;
+  float: right;
+  right: 18px;
+  position: fixed !important;
+  bottom: 22px;
+  top: auto;
+}
+.capturediv{
+border-radius: 50%;
+background-color: green;
+position: fixed;
+
+/* width: 30px; */
+padding: 10px;
+width: 50px;
+height: 50px;
+margin: 0 auto;
+bottom: 0;
+}
+.popuptitle{
+    
+    font-size: 22px;
+    background-color: #00bfa5;
+    color: #fff;
+    padding: 10px;
+    // text-align: center;
+    margin-bottom: -1px;
+  }
+  .popuptitle ion-icon{
+      float:right;
+  }
+
+  .pophead{
+    position: relative;
+   
+}

@@ -1,0 +1,81 @@
+<ion-header style="z-index: unset;">
+  <ion-toolbar >
+
+    <!-- <ion-avatar item-left> -->
+
+    <!-- </ion-avatar> -->
+    <div text-left (click)="profilePage()" style="width: auto !important;">
+      <img  class="profileimage" *ngIf="profileImg!='default'" style="top:1px !important;object-fit: cover;width:40px"
+        [src]="sanitizer.bypassSecurityTrustUrl(profileImg)">
+      <img  class="profileimage" style="top:1px !important;object-fit: cover;width:40px" *ngIf="profileImg=='default'"
+        src="assets/imgs/chatterplace.png" onerror="assets/imgs/chatterplace.png">
+      <div style="margin-top: -45px;
+      margin-left: 15px;">
+        <span style="text-transform: capitalize; margin-left: 35px;font-size: 16px;position: relative;top:3px;">
+          {{username}}</span><br>
+        <span style="margin-left: 35px;font-size: 10px;"> {{designation}}</span>
+
+      </div>
+
+    </div>
+
+    <!-- <ion-title style="font-size: 23px;font-weight: 600;letter-spacing: 1px;text-transform: capitalize;">
+      <ion-avatar item-left>
+        <img class="profileimage" *ngIf="profileImg!='default'" style="top:1px !important;object-fit: cover;width:40px"
+          [src]="sanitizer.bypassSecurityTrustUrl(profileImg)">
+          <img class="profileimage" style="top:1px !important;object-fit: cover;width:40px"
+          *ngIf="profileImg=='default'" src="assets/imgs/chatterplace.png">
+      </ion-avatar>
+       <h6>{{username}}</h6>
+    </ion-title> -->
+
+    <ion-buttons slot="end">
+      <!-- <ion-toggle color="primary" [(ngModel)]="themeselect" (ionChange)="changetheme()"></ion-toggle> -->
+      <!-- <ion-button (click)="changetheme()"><ion-icon name="color-wand"></ion-icon></ion-button> -->
+      <ion-button (click)="events()">
+        <!-- <ion-icon name="today" style="font-size: 25px;"></ion-icon> -->
+        <!-- <i class="fa fa-gift" aria-hidden="true" style="font-size: 25px;"></i> -->
+        <i class="fa fa-birthday-cake" aria-hidden="true" style="font-size: 25px;"></i>
+
+      </ion-button>
+      <ion-button (click)="milestone()">
+        <i class="fa fa-trophy" aria-hidden="true" style="font-size: 25px;"></i>
+
+        <!-- <ion-icon name="analytics-outline" style="font-size: 25px;"></ion-icon> -->
+      </ion-button>
+      <ion-button (click)="menu()">
+        <ion-icon name="ellipsis-vertical" style="font-size: 25px;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="{{colorCode}}">
+  <ion-tabs #tabs (ionTabsDidChange)="tabChange(tabs)">
+    
+    <ion-tab-bar slot="top"  class="--color-selected:green;">
+      <ion-tab-button tab="recent">
+        <ion-icon  name="chatbubbles"></ion-icon>
+        <ion-label >Recent</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="contact">
+        <ion-icon  name="person-circle"></ion-icon>
+        <ion-label >Contact</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="room">
+        <ion-icon  name="cube"></ion-icon>
+        <ion-label >Groups</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+</ion-tabs>
+
+
+</ion-content>
+<ion-footer [ngStyle]="{'background-color': colorCodeBottom}"  style="padding: 5px;">
+  <div style="float:left;font-size:14px;color:#fff;float: left;text-transform: capitalize;"> &copy; Priya P M
+  </div>
+  <div style="float: right;font-size:14px;color:#fff;text-transform: capitalize;">flinta</div> <br />
+
+</ion-footer>

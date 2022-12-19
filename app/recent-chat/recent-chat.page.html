@@ -1,0 +1,138 @@
+<ion-content>
+    <ion-list no-lines style="margin-bottom: 10px;">
+        <!-- *ngIf="myfriends!=null && myfriends.length!=0 " -->
+        <ion-searchbar       id="stay-cancel"
+        (input)="searchuser($event)"   (ionCancel)="onCancel($event)" (ionClear)="onCancel($event)"  placeholder="Search">
+        </ion-searchbar>
+        <!-- <ion-searchbar [showCancelButton]="true" (input)="searchuser($event)"  (ionCancel)="onCancel($event)" placeholder="Search"> -->
+            
+        <!-- </ion-searchbar> -->
+
+
+        <ion-list-header style="text-align: center;" *ngIf="myfriends!=null && myfriends.length==0 ">
+            <ion-row style="width: 100%;">
+                <div style="    width: 100%;
+                text-align: center;">
+                    <h6> No data found
+                    </h6>
+                </div>
+
+            </ion-row>
+        </ion-list-header>
+        <div *ngFor="let item of myfriends;let i = index;">
+
+        <ion-item   [ngClass]="{'highlight' : item.selected}"
+              style="border-bottom: 1px solid lightgrey;border-style: initial;">
+
+            <!-- <ion-avatar item-left>
+
+            </ion-avatar> -->
+
+            <ion-avatar slot="start" style=" width: 45px !important;height: 45px !important;">
+
+                <img (click)="zoomImage(item.buddyimage)"  *ngIf="item.buddyimage!='default' && item.buddyimage!='undefined'"
+                    [src]="sanitizer.bypassSecurityTrustUrl(item.buddyimage)" onerror="assets/imgs/chatterplace.png">
+                <img *ngIf="item.chatType=='1'   &&(item.buddyimage=='default' || item.buddyimage=='undefined')"
+                    src='assets/imgs/chatterplace.png'>
+                <img *ngIf="item.chatType=='2'  && (item.buddyimage=='default' || item.buddyimage=='undefined')"
+                    src='assets/imgs/groupIcon.png' onerror="assets/imgs/groupIcon.png">
+
+                <div *ngIf="item.selected" class="hightlighttick">
+                    <ion-icon style="color:#fff" name="checkmark"></ion-icon>
+                </div>
+            </ion-avatar>
+            <ion-label (click)="buddychat(item)">
+                <!-- <h2 *ngIf="item.groupName!=null || item.groupName!=undefined" style="text-transform: capitalize">
+                    {{item.groupName}}</h2> -->
+                <h2 *ngIf="item.username!=null"
+                    style="font-weight: bold; text-transform: capitalize;font-size: 14px;"
+                    [ngStyle]="{'color': colorCode}">
+                    {{item.username}}</h2>
+                <div item-right>
+                    <i *ngIf="item.count!=undefined && item.count!='undefined' && item.count!=0"
+                        class="icon ion-ios7-telephone-outline"><span
+                            class="badge badge-assertive icon-badge" [ngStyle]="{'background-color': colorCode}">{{item.count}}</span></i>
+                    <span *ngIf="item.dateString==''" style="float: right;font-size: 12px;color: gray;">
+                        {{item.timestamp | date: "hh:mm a" }}</span>
+                    <span *ngIf="item.dateString!=null"
+                        style="float: right;font-size: 12px;color: gray;">{{item.dateString}}</span>
+                </div>
+                <!-- <h6 style="color:gray;text-overflow: ellipsis;overflow: hidden;width: 192px;white-space: nowrap;"
+                    *ngIf="item.fileType!='map' && item.fileType!='image'  && item.fileType!='JPG' && item.fileType!='jpg' && item.fileType!='png' && item.fileType!='PNG' && item.fileType!='JPEG' && item.fileType!='jpeg' && item.fileType!='gif' && item.fileType!='GIF' && item.fileType!='application' && item.fileType!='audio' && item.fileType!='mp3' && item.fileType!='video' && item.fileType!='mp4' && item.fileType!='avi' && item.fileType!='flv' 
+                    && item.fileType!='dotx' && item.fileType!='doc' && item.fileType!='dot' && item.fileType!='docx' && item.fileType!='xls' && item.fileType!='xlsx' && item.fileType!='xlt' && item.fileType!='xla' && item.fileType!='pdf' && item.fileType!='PDF' && item.fileType!='pps' && item.fileType!='ppa'  && item.fileType!='pptx' && item.fileType!='potx' && item.fileType!='txt' && item.fileType!='TXT'">
+                    {{item.message}}</h6> -->
+
+                <span
+                    style="font-size: 13px;color:gray;text-overflow: ellipsis;overflow: hidden;width: 192px;white-space: nowrap;"
+                    *ngIf="item.fileType!='video text' && item.fileType!='call text' && item.fileType!='map' && item.fileType!='map live' && item.fileType!='image'  && item.fileType!='JPG' && item.fileType!='jpg' && item.fileType!='png' && item.fileType!='PNG' && item.fileType!='JPEG' && item.fileType!='jpeg' && item.fileType!='gif' && item.fileType!='GIF' && item.fileType!='application' && item.fileType!='audio' && item.fileType!='mp3' && item.fileType!='video' && item.fileType!='mp4' && item.fileType!='avi' && item.fileType!='flv' 
+                    && item.fileType!='dotx' && item.fileType!='doc' && item.fileType!='dot' && item.fileType!='docx' && item.fileType!='xls' && item.fileType!='xlsx' && item.fileType!='xlt' && item.fileType!='xla' && item.fileType!='pdf' && item.fileType!='PDF' && item.fileType!='pps' && item.fileType!='ppa'  && item.fileType!='pptx' && item.fileType!='potx' && item.fileType!='txt' && item.fileType!='TXT'&& item.fileType!='mom' && item.fileType!='event' " 
+                    text-wrap [innerHTML]="item.message"></span>
+
+
+                <span *ngIf="item.fileType=='call text'"  text-wrap
+                    style="color: red;font-size: 13px;text-overflow: ellipsis;overflow: hidden;width: 192px;white-space: nowrap;"
+                    data-testid="miss" data-icon="miss" class="_25zst">
+                    <ion-icon style="color: red;font-size: 13px;" name="call-outline"></ion-icon>
+                    &nbsp;<span  style="font-size: 13px;color:gray;text-overflow: ellipsis;overflow: hidden;width: 192px;white-space: nowrap;">{{item.message}}</span></span>
+               
+                    <span *ngIf="item.fileType=='video text'"  text-wrap
+                    style="color: red;font-size: 13px;text-overflow: ellipsis;overflow: hidden;width: 192px;white-space: nowrap;"
+                    data-testid="miss" data-icon="miss" class="_25zst">
+                    <ion-icon style="color: red;font-size: 13px" name="videocam-outline"></ion-icon>
+                    &nbsp;<span  style="font-size: 13px;color:gray;text-overflow: ellipsis;overflow: hidden;width: 192px;white-space: nowrap;">{{item.message}}</span></span>
+               
+
+
+                <!-- <i *ngIf="item.count!=undefined && item.count!='undefined'"
+                    class="icon ion-ios7-telephone-outline"><span
+                        class="badge badge-assertive icon-badge">{{item.count}}</span></i> -->
+                <!--Image div-->
+                <h3
+                    *ngIf="item.fileType=='image'  || item.fileType=='JPG' || item.fileType=='jpg' || item.fileType=='png' || item.fileType=='PNG' || item.fileType=='JPEG' || item.fileType=='jpeg' || item.fileType=='gif' || item.fileType=='GIF'">
+                    <span style="color:gray">📷 Photo</span>
+                </h3>
+
+                <!--Map div-->
+                <h3 *ngIf="item.fileType=='map' || item.fileType=='map live'">
+                    <img style="height:20px" src="assets/imgs/location.png" />
+                    <span style="color:gray">Location</span>
+                </h3>
+
+                <!--File div-->
+                <h3
+                    *ngIf="item.fileType=='application' || item.fileType=='dotx' || item.fileType=='doc' || item.fileType=='dot' || item.fileType=='docx' || item.fileType=='xls' || item.fileType=='xlsx' || item.fileType=='xlt'|| item.fileType=='xla'|| item.fileType=='pdf' || item.fileType=='PDF' || item.fileType=='pps' || item.fileType=='ppa'  || item.fileType=='pptx' || item.fileType=='potx' || item.fileType=='txt' || item.fileType=='TXT'">
+                    <img style="height:20px;margin-bottom: -5px;" src="assets/imgs/document.png" />
+                    <span style="color:gray;">{{item.fileExtension}}</span>
+                </h3>
+
+                <!--Video file-->
+                <h3
+                    *ngIf="item.fileType=='video' || item.fileType=='mp4' || item.fileType=='avi' || item.fileType=='flv'">
+                    <span style="color:gray">🎥 Video</span>
+                </h3>
+
+                <!--Audio div-->
+                <h3 *ngIf="item.fileType=='audio' ||  item.fileType=='mp3'">
+                    <span style="color:gray">🔊 Audio</span>
+                </h3>
+
+                <h3 *ngIf="item.fileType=='mom'">
+                    <span style="color:gray"><i class="far fa-handshake"></i>&nbsp; MOM</span>
+                </h3>
+                
+                <h3 *ngIf="item.fileType=='event'">
+                    <span style="color:gray"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp; Invitation</span>
+                </h3>
+
+
+            </ion-label>
+
+
+
+
+
+
+        </ion-item>
+        </div>
+    </ion-list>
+</ion-content>

@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Group List</ion-title>
+    <ion-icon (click)="dismissModal()" title="Close" name="close" class="closepop"></ion-icon>
+
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+   </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item *ngFor="let item of allmygroups" style="border-bottom: 1px solid lightgrey;"  (ionChange)="getCheckboxValues($event,item)">
+    <ion-avatar item-left>
+      <img *ngIf="item.groupimage" src="sanitizer.bypassSecurityTrustUrl(item.groupimage)" onError="this.src='assets/imgs/groupIcon.png'">
+      <!-- <img *ngIf="item.groupimage=='default'" src="assets/imgs/groupIcon.png">
+      <img *ngIf="item.groupimage!='default'" [src]="sanitizer.bypassSecurityTrustUrl(item.groupimage)"> -->
+    </ion-avatar>
+    <h6 style="text-transform :capitalize">&nbsp;{{item.groupname}}</h6>
+    <ion-checkbox slot="end"  [(ngModel)]="item.isChecked"></ion-checkbox>
+  </ion-item>
+
+  <ion-fab  horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button *ngIf="invite_groups&&invite_groups.length>0" style="--background: #0c84b4;" (click)="sendinvite()">
+      <ion-icon name="paper-plane"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

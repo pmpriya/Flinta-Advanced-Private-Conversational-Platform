@@ -1,0 +1,181 @@
+<ion-content padding>
+
+  <ion-icon (click)="dismissModal()" name="close"
+    style="float: right;margin-top: 11px;margin-right: 17px;font-size: 25px;color: white;"></ion-icon>
+  <h1 style="margin-top: 0px;" class="popuptitle"><span class="pophead">Preview</span></h1>
+
+
+  <div style="margin:0 auto;text-align: center">
+    <!--Image file-->
+    <img src="{{lastimage}}" style="    padding: 10px;width:auto;height:245px;"
+      *ngIf="fileType =='image' || fileType=='JPG' || fileType=='jpg' || fileType=='png' || fileType=='PNG' || fileType=='JPEG' || fileType=='jpeg' || fileType=='gif' || fileType=='GIF'">
+
+    <!-- mp3 file -->
+    <img src="assets/imgs/mp3.png" style="    padding: 10px;width:245px;height:295px;" *ngIf=" fileType =='mp3' ">
+
+    <!--Doc format-->
+    <a *ngIf="fileType=='dotx' ||fileType=='doc' || fileType=='dot' || fileType=='docx'">
+      <img style="height:35px;padding: 10px;" src="assets/imgs/wordDoc.png">
+      <p text-wrap>{{webFileUploadname}}</p>
+
+    </a>
+    <!--Xls format-->
+    <a *ngIf="fileType=='xls' || fileType=='xlsx' || fileType=='xlt'|| fileType=='xla'">
+      <img style="height:35px;padding: 10px;" src="assets/imgs/excelDoc.png">
+
+      <p text-wrap>{{webFileUploadname}}</p>
+
+    </a>
+
+    <!--Txt Format-->
+    <a *ngIf="fileType=='txt' || fileType=='TXT'">
+      <img style="padding: 10px;height:35px;" src="assets/imgs/txtFormat.png">
+      <p text-wrap>{{webFileUploadname}}</p>
+
+    </a>
+
+
+    <div style="    ">
+      <!--PDF format-->
+      <a *ngIf="fileType=='pdf' || fileType=='PDF'">
+
+        <img style="padding: 10px;height:35px;" src="assets/imgs/pdfDoc.png">
+        <p text-wrap>{{webFileUploadname}}</p>
+
+      </a>
+
+
+    </div>
+
+
+    <!--PPT format-->
+    <a *ngIf="fileType=='pps' || fileType=='ppa'  || fileType=='pptx' || fileType=='potx'">
+      <img style="height:35px;padding: 10px;" src="assets/imgs/ppt.png">
+      <p text-wrap>{{webFileUploadname}}</p>
+      <hr>
+    </a>
+
+    <!--Video file-->
+    <video *ngIf="fileType=='mp4' || fileType=='avi' || fileType=='flv'" width="200" height="125" controls
+      controlsList="nodownload" preload="none">
+      <source src="{{lastimage}}" type="video/mp4">
+      <source src="{{lastimage}}" type="video/ogg">
+    </video>
+
+  </div>
+
+  <span class="uploadimage" style="margin-top: 10px">
+    <div class="load" *ngFor="let item of MultiUploadimage;let i = index">
+
+      <div style="    background-color: #d8d8d8;" class="load1" role="button" (click)="selectimage(item,i)">
+        <span>
+          <ion-icon (click)="uploadclosedata(item,i)" title="Close" name="close" class="uploadclose"></ion-icon>
+
+          <!--Image file-->
+          <img src="{{item.image}}" style="  margin-bottom: 10px;width:auto;"
+            *ngIf="item.fileType =='image' || item.fileType=='JPG' || item.fileType=='jpg' || item.fileType=='png' || item.fileType=='PNG' || item.fileType=='JPEG' || item.fileType=='jpeg' || item.fileType=='gif' || item.fileType=='GIF'">
+
+          <!--mp3 file-->
+          <img src="assets/imgs/mp3.png" style="    margin-bottom: 10px;width:145px;height:145px;"
+            *ngIf="item.fileType =='mp3'">
+
+          <!--Doc format-->
+          <a *ngIf="item.fileType=='dotx' ||item.fileType=='doc' || item.fileType=='dot' || item.fileType=='docx'"
+            style="    margin-bottom: 10px;">
+            <img class="document" src="assets/imgs/wordDoc.png">
+            <!-- <h4 text-wrap class="fileexten">{{item.webFileUploadname}}</h4> -->
+            <hr>
+          </a>
+          <!--Xls format-->
+          <a *ngIf="item.fileType=='xls' || item.fileType=='xlsx' || item.fileType=='xlt'|| item.fileType=='xla'"
+            style="    margin-bottom: 10px;">
+            <img class="document" src="assets/imgs/excelDoc.png">
+
+
+          </a>
+
+          <!--Txt Format-->
+          <a *ngIf="item.fileType=='txt' || item.fileType=='TXT'" style="    margin-bottom: 10px;">
+            <img class="document" src="assets/imgs/txtFormat.png">
+
+          </a>
+
+
+          <div>
+            <!--PDF format-->
+            <a *ngIf="item.fileType=='pdf' || item.fileType=='PDF'" style="    margin-bottom: 10px;">
+
+              <img class="document" src="assets/imgs/pdfDoc.png">
+
+            </a>
+
+
+          </div>
+
+
+          <!--PPT format-->
+          <a *ngIf="item.fileType=='pps' || item.fileType=='ppa'  || item.fileType=='pptx' || item.fileType=='potx'"
+            style="    margin-bottom: 10px;">
+            <img class="document" src="assets/imgs/ppt.png">
+
+          </a>
+
+          <!--Video file-->
+          <video *ngIf="item.fileType=='mp4' || item.fileType=='avi' || item.fileType=='flv'" width="200" height="125"
+            style="    margin-bottom: 10px;" controls controlsList="nodownload" preload="none">
+            <source src="{{item.image}}" type="video/mp4">
+            <source src="{{item.image}}" type="video/ogg">
+          </video>
+        </span>
+
+
+      </div>
+     
+
+    </div>
+    
+    <span *ngFor="let item of MultiUploadimage;let i = index">
+      <textarea [ngStyle]="{'display':MultiUploadimage[i].visible}"  rows="1" [(ngModel)]="MultiUploadimage[i].shareText" placeholder="Type a message" minlength="1"
+        msd-elastic=""
+        class="ng-valid-minlength ng-valid-maxlength ng-dirty ng-touched ng-empty ng-invalid ng-invalid-required"
+        style="    overflow: auto;
+        overflow-wrap: break-word;
+        padding: 9px 32px 0px 25px;
+        margin-left: 2.3%;
+        background-color: white;
+        height: 45px;
+        border-radius: 29px;
+        margin-top: -4px;
+        width: 75%!important;
+        /* margin-bottom: 30px; */
+        position: absolute;
+        border: 1px solid #00bfa5;
+        margin-top: 71px;
+        left: 50px;" (keyup.enter)="sendImages()"></textarea>
+
+
+      <div [ngStyle]="{'display':MultiUploadimage[i].visible}"  (click)="sendImages()" class="capturesend">
+        <ion-icon name="send" title="Send" class="capturesendicon"></ion-icon>
+      </div>
+    </span>
+
+    <input type="file" id="imguploadmul" *ngIf="!mobileicon" multiple style="display:none"
+      (change)="onUploadChangepop($event)" />
+    <div role="button" class="addfile" onclick="$('#imguploadmul').trigger('click'); return false;">
+
+      <span>
+        <!-- <ion-icon name="add" title="Add" style="font-size:2em"></ion-icon> -->
+        <i class="fa fa-plus" aria-hidden="true" style="font-size:2em"></i>
+
+      </span>
+      <div class="file">
+
+        Add File
+
+      </div>
+    </div>
+
+  </span>
+
+
+</ion-content>

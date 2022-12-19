@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <span style="float: left;
+    margin-top: 7px;color:white"> Contacts </span>
+
+    <!-- <img 
+      height="30" src="assets/addicon.png"  (click)="creategroup()" /> -->
+    <button ion-button clear icon-only item-right
+      style="background: transparent; float: right;margin-right: 10px;float: right;margin-right: 10px;color: black;"
+    
+      *ngIf=" forwardFlow==false && groupname!=undefined && groupname.length!=0 && contactsSelected.length!=0"
+      (click)="creategroup()">
+      <ion-icon name="add-circle" title="Create Group" style="position: relative;top:3px;font-size:40px !important;" class="ionicon"></ion-icon>
+    </button>
+
+    <button ion-button clear icon-only item-right
+      style="background: transparent; float: right;margin-right: 10px;float: right;margin-right: 10px;color: black;"
+      *ngIf="forwardFlow==true && contactsSelected.length!=0"
+      (click)="forwardSelectedMessage()">
+      <ion-icon name="play-forward-circle-outline" title="Forward" style="position: relative;top:3px;font-size:40px !important;" class="ionicon"></ion-icon>
+    </button>
+
+  </ion-toolbar>
+</ion-header>
+
+<!-- <ion-header>
+
+  <ion-navbar color="hcolor">
+    <ion-title>Contacts</ion-title>
+
+    <button ion-button clear icon-only item-right style="float: right;margin-right: 10px;"
+      [disabled]="groupname ==undefined || groupname == ''" (click)="creategroup()">
+      <ion-icon name="send" class="ionicon" float-right></ion-icon>
+    </button>
+
+  </ion-navbar>
+
+</ion-header> -->
+
+
+<ion-content padding>
+  <ion-item>
+    <ion-searchbar (ionInput)="getItems($event)" (ionClear)="onCancel($event)"></ion-searchbar>
+  </ion-item>
+  <ion-item>
+    <ion-label style="font-size: 15px;">Select all</ion-label>
+    <ion-checkbox color="dark" [(ngModel)]="userall" (ionChange)="checkall(userall)" item-right checked="true">
+    </ion-checkbox>
+  </ion-item>
+  <ion-list>
+    <ion-item *ngFor="let item of contactList">
+      <ion-avatar item-left style="width: 45px !important;height: 45px !important;">
+
+        <img *ngIf="item.photourl!='default'" [src]="sanitizer.bypassSecurityTrustUrl(item.photourl)">
+        <img *ngIf="item.photourl=='default'" src='assets/imgs/chatterplace.png'>
+      </ion-avatar>
+
+      <ion-label style="text-transform :capitalize;padding: 5px;font-size: 15px;">{{item.username}}</ion-label>
+      <div style="text-transform: capitalize;float: left;font-size: 13px;color: gray;    margin-right: 5px;
+      ">{{item.designation}}</div>
+      <ion-checkbox color="dark" id={{item.uid}} (ionChange)="change(item)" [(ngModel)]="item.selected" item-right>
+      </ion-checkbox>
+    </ion-item>
+
+   
+  </ion-list>
+  <ion-list *ngIf="grouplist!=undefined && grouplist.length!=0">
+    <ion-item  *ngFor="let item of grouplist">
+      <ion-avatar item-left style="width: 45px !important;height: 45px !important;">
+
+        <img *ngIf="item.groupimage!='default'" [src]="sanitizer.bypassSecurityTrustUrl(item.groupimage)">
+        <img *ngIf="item.groupimage=='default'" src='assets/imgs/groupIcon.png'>
+      </ion-avatar>
+
+      <ion-label style="text-transform :capitalize;padding: 5px;font-size: 15px;">{{item.groupname}}</ion-label>
+      <div style="text-transform: capitalize;float: left;font-size: 13px;color: gray;    margin-right: 5px;
+      ">&nbsp;{{item.groupcreated}}</div>
+      <ion-checkbox color="dark" id={{item.uid}} (ionChange)="change(item)" [(ngModel)]="item.selected" item-right>
+      </ion-checkbox>
+    </ion-item>
+
+  </ion-list>
+</ion-content>
+<ion-footer *ngIf="forwardFlow==false">
+  <ion-row>
+    <ion-col col-7 col-lg-9 col-md-9 col-xl-9>
+      <ion-input [(ngModel)]="groupname" [ngStyle]="{'color': colorCode}" placeholder="Type group name"></ion-input>
+
+    </ion-col>
+    <ion-col col-2 col-lg-1 col-md-1 col-xl-1>
+      <span style="    margin-top: 10px;
+      float: left;" [ngStyle]="{'color': colorCode}">Open Group</span>
+
+      <ion-checkbox style="    float: right;
+      margin-right: 10px;" color="dark" [ngStyle]="{'color': colorCode}" value="true" [(ngModel)]="opengroup"
+        class="contacticon"></ion-checkbox>
+    </ion-col>
+  </ion-row>
+
+</ion-footer>
