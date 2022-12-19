@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script>
+    var parcelRequire;
+</script>
+  <meta charset="utf-8" />
+  <title>Flinta</title>
+
+  <base href="/" />
+
+  <meta name="color-scheme" content="light dark" />
+  <meta name="viewport"
+    content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="msapplication-tap-highlight" content="no" />
+
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <link rel="icon" type="image/png" href="assets/icon/favicon.png" />
+
+  <!-- add to homescreen for ios -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7-_6Z0oy5HP8AdL72Pz1kvZtfJ-JxRc0&amp;libraries=places&amp;language=en"></script>
+
+  <!-- <script src="assets/js/apiRTC-latest.min.js"></script> -->
+  <script src="https://cloud.apizee.com/apiRTC/apiRTC-latest.min.js"></script>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+    integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
+
+  <!-- <script>
+    // if ('serviceWorker' in navigator) {
+    //   navigator.serviceWorker.register('service-worker.js')
+    //     .then(() => console.log('service worker installed'))
+    //     .catch(err => console.error('Error', err));
+    // }
+    if ('serviceWorker' in navigator) {
+navigator.serviceWorker.register('../firebase-messaging-sw.js')
+  .then(function(registration) {
+    console.log('Registration successful, scope is:', registration.scope);
+  }).catch(function(err) {
+    console.log('Service worker registration failed, error:', err);
+  });
+}
+  </script> -->
+  <link rel="manifest" crossorigin="use-credentials" href="manifest.webmanifest">
+
+  <meta name="theme-color" content="#1976d2">
+  <script type="text/javascript">
+
+    function WebSocketTest() {
+
+      // alert("WebSocket is supported by your Browser!");
+
+      // Let us open a web socket
+      // var ws = new WebSocket("ws://demo.flintaai.com:8152/");
+      // const ws = new WebSocket('ws://35.231.96.83:8080');
+     //ss
+      var socket = io.connect('http://192.168.0.127:8152');
+
+      //var socket = io.connect('http://192.168.0.127:8152');
+
+      socket.on('connect', function () {
+        alert("WebSocket Connected!");
+
+        socket.send(window.location);
+      });
+      var todo = {
+        uid: localStorage.getItem("FlintauserID"),
+        backclick: true
+      }
+      socket.emit('recentmessgae', todo)
+      // The browser doesn't support WebSocket
+      // alert("WebSocket NOT supported by your Browser!");
+    }
+    var socket = io.connect('http://192.168.0.127:8152');
+    //ss
+    //var socket = io.connect('http://192.168.0.127:8152');
+
+    socket.on('connect', function () {
+      alert("WebSocket Connected!");
+
+      socket.send(window.location);
+    });
+    // WebSocketTest();
+    $(window).bind('beforeunload', function () {
+
+      var FlintauserID = localStorage.getItem("FlintauserID");
+
+      var obj = { "mobile": FlintauserID, "status": "offline", "last_changed": Date.now(), "deviceid": 0 }
+
+      console.log("Logout pass" + JSON.stringify(obj))
+
+      $.post("http://192.168.0.127:8153/updatemystatus", obj, function (data, status) {
+        console.log("Logout: " + data + "\nStatus: " + status);
+      });
+
+      return '>>>>>Before You Go<<<<<<<< \n Your custom message go here';
+    });
+// window.addEventListener("beforeunload", function (e) {
+//     // to do something (Remember, redirects or alerts are blocked here by most browsers):
+//     doSomething();    
+//     // to show a dialog (uncomment to test):
+//     return "Do you really want to leave our brilliant application?";
+// });
+
+// // Execute code, then prompt the user to stay
+// window.onbeforeunload = function () {
+//   console.log("leave page")
+
+//   // This will happen before leaving the page
+//   return 'Are you sure you want to leave?';
+
+// }
+
+
+  </script>
+</head>
+
+<body>
+  <app-root></app-root>
+  <noscript>Please enable JavaScript to continue using this application.</noscript>
+</body>
+
+</html>

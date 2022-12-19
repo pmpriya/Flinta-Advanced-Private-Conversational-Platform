@@ -1,0 +1,267 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+ion-item {
+    --highlight-color-valid: transparent;
+    --highlight-color-invalid: transparent;
+    --highlight-color-focused: var(--ion-color-light);
+  }
+
+  .item-has-focus .label-stacked.sc-ion-label-md-h{
+      color:unset !important;
+  }
+
+  // ion-toolbar{
+  //   --background: #24243e;
+  //   color: white;
+  // }
+  :focus {
+    outline: none;
+    }
+    .alert-wrapper.sc-ion-alert-md{
+      border-radius: 10px;
+      // height: 200px !important;
+    }
+    .dayview-allday-table{
+      display: none;
+    }
+    .weekview-allday-table{
+      display: none;
+    }
+    .dayview-normal-event-container
+    {
+      top:-50px !important;
+    }
+    .action-sheets-groups-page {
+    
+      // .action-sheet-title.sc-ion-action-sheet-md
+      // {
+      //   color: white !important;
+      // }
+
+      
+      // .EditionIcon {
+      //     color: white !important;
+
+      //     // .action-sheet-icon.sc-ion-action-sheet-md
+      //     // {
+      //     //   color: white !important;
+      //     // }
+      // }
+  
+  }
+
+  .action-sheets-groups-page1 {
+    
+    .action-sheet-title.sc-ion-action-sheet-md
+    {
+      color: black !important;
+    }
+
+    
+    .EditionIcon1 {
+        color: black !important;
+
+        .action-sheet-icon.sc-ion-action-sheet-md
+        {
+          color: black !important;
+        }
+    }
+
+}
+    .weekview-normal-event-container{
+      top:-50px !important;
+
+    }
+    .highlight {
+      background-color:#FFFF00;
+      }
+    .searchbar-clear-button.sc-ion-searchbar-md{
+      visibility: none !important;
+    }
+    .searchbar-has-value.searchbar-has-focus.sc-ion-searchbar-md-h .searchbar-clear-button.sc-ion-searchbar-md{
+      visibility: none !important;
+
+    }
+    .alert-button.sc-ion-alert-md{
+      color: #fff !important;
+      background-color: #8e8787;
+      color: white;
+      /* width: 39%; */
+      padding-left: 25px;
+      padding-right: 25px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+  }
+  .alert-button-group sc-ion-alert-md{
+    justify-content: center;
+  }
+    .sc-ion-loading-md-h {
+      --background:lightgray;
+      --spinner-color: yellow;
+    }
+    .my-custom-class .alert-wrapper {
+      .alert-title.sc-ion-alert-md {
+        color: #ca0d0d;
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+    .alert-message.sc-ion-alert-md {
+      max-height: 240px;
+      font-size: 15px;
+      padding: 0 23px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    .alert-button-inner.sc-ion-alert-md {
+      -ms-flex-pack: end;
+      justify-content: flex-end;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    .alert-sub-title.sc-ion-alert-md {
+      color: #9531e0;
+      font-size: 16px;
+  }
+      background: #f7fdc3;
+      border-radius: 10px;
+    }
+    .item-inner{
+      border-style:none !important;
+    }
+    .toastcss{
+      // --background: #2997f5;
+      --background:red;
+      color: white;
+      text-align: center;
+    }
+
+  //   ion-toolbar {
+  //     --background: #0c84b4;
+  //     color: white;
+  // }
+  .popupmodal{
+    --width: 600px !important;
+    --height: 500px !important;
+  }
+  .fullscreenmodal{
+    --width: 100% !important;
+    --height: 100% !important;
+  }
+  .native-input[disabled].sc-ion-input-md {
+    opacity: 0.6;
+    // border: 1px solid grey !important;
+    // border-radius: 5px;
+    // margin: 10px 0;
+    background: #fafafa !important;
+}
+  .pop .popover-content {
+    top: 55px !important;
+    right: 15px !important;
+    left: unset !important;
+    padding: 10px;
+    transform-origin: right top !important;
+  }
+  .pop .mainpopover {
+    transform-origin: left top !important;
+  }
+  
+  img {
+    cursor: pointer !important;
+  }
+  .popover_class .popover-content {
+  //   top: 226.25px !important;
+  //   /* bottom: 359px; */
+  //   /* right: 15px !important; */
+  //   position: relative !important;
+  //   left: unset !important;
+  //   transform-origin: left bottom !important;
+  //   left: -50px !important;
+  width: auto;
+  }
+  .zoomview  {
+ height: 300px;
+  }
+
+  @media only screen and (min-height: 600px) and (min-width: 768px){
+    .sc-ion-modal-md-h{
+      // --width: 100% !important;
+      // --height: 100% !important;
+      --ion-safe-area-top: 0px;
+      --ion-safe-area-bottom: 0px;
+      --ion-safe-area-right: 0px;
+      --ion-safe-area-left: 0px;
+  }
+  } 
+
+  ion-modal ion-toolbar{
+    --background:orange ;
+}
+// ion-modal span{
+//     margin-top: 7px;
+// color: white;
+// font-weight: bold;
+// }
+ion-modal ion-title{
+  color: white;
+
+}
+ion-modal ion-icon{
+    color: white !important
+}
+
+.searchbar-input.sc-ion-searchbar-md{
+  border-radius: 50px;
+  height: 39px;
+}
+.searchbar-input.sc-ion-searchbar-md {
+  --box-shadow: none;
+}
+// .modal-wrapper.sc-ion-modal-md{
+//   border-radius: 61px;
+// }
+
+ion-icon{
+  cursor: pointer;
+}
+.cavirdreams .alert-radio-label.sc-ion-alert-md {
+ font-family: Cavirdreams;
+}
+.inherit .alert-radio-label.sc-ion-alert-md {
+  font-family: sans-serif;
+ }
+ .Ostrich .alert-radio-label.sc-ion-alert-md {
+  font-family: Ostrich;
+ }
+ .Josefinsans .alert-radio-label.sc-ion-alert-md {
+  font-family: Josefinsans;
+ }
+ .Pacifico .alert-radio-label.sc-ion-alert-md {
+  font-family: Pacifico;
+ }
+
